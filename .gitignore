@@ -29,3 +29,5 @@ Thumbs.db
 my-app/
 package-lock.json
 package-lock.json
+.env
+.env.local
