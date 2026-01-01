@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KapeYamaha Dealership | Quality Vehicles & Parts</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1><i class="fas fa-car"></i> Kape<span>Yamaha</span></h1>
+                <p class="tagline">Quality Vehicles & Spare Parts</p>
+            </div>
+            <nav class="nav">
+                <a href="#home" class="active">Home</a>
+                <a href="#products">Products</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+            </nav>
+            <div class="header-actions">
+                <button class="btn-cart"><i class="fas fa-shopping-cart"></i> <span class="cart-count">0</span></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Find Your Perfect Vehicle</h2>
+                <p>Discover our wide range of Toyota cars, Yamaha bikes, commercial vehicles, and genuine spare parts.</p>
+                <a href="#products" class="btn-primary">Browse Products</a>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?ixlib=rb-4.0.3&auto=format&fit=crop&w=600" alt="Toyota Land Cruiser">
+            </div>
+        </div>
+    </section>
+
+    <!-- Category Filter -->
+    <section class="category-filter">
+        <div class="container">
+            <h3>Browse by Category</h3>
+            <div class="category-buttons">
+                <button class="category-btn active" data-category="all">All Products</button>
+                <button class="category-btn" data-category="car">Toyota Cars</button>
+                <button class="category-btn" data-category="motorbike">Yamaha Bikes</button>
+                <button class="category-btn" data-category="parts">Spare Parts</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section" id="products">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Products</h2>
+                <p>Quality vehicles and parts for every need</p>
+            </div>
+            
+            <div class="products-grid" id="products-container">
+                <!-- Products will be loaded here -->
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin"></i> Loading products...
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-car"></i> KapeYamaha</h3>
+                    <p>Your trusted dealership for quality vehicles and genuine spare parts since 2010.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Main Street, City</p>
+                    <p><i class="fas fa-phone"></i> (123) 456-7890</p>
+                    <p><i class="fas fa-envelope"></i> info@kapeyamaha.com</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="#home">Home</a>
+                    <a href="#products">Products</a>
+                    <a href="#about">About Us</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 KapeYamaha Dealership. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="/js/app.js"></script>
+</body>
+</html>

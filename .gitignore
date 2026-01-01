@@ -1,0 +1,31 @@
+node_modules/
+.env
+npm-debug.log
+.DS_Store
+/uploads/
+*.log
+# Backend specific
+.env.local
+.env.development.local
+.env.production.local
+
+# Testing
+coverage/
+.nyc_output/
+
+# OS generated
+Thumbs.db
+*.swp
+*~
+
+# IDE
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+my-app/
+package-lock.json
+package-lock.json

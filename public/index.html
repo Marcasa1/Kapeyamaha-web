@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -1353,7 +1353,7 @@
                 price: 125000,
                 description: "Flagship luxury SUV with 3.5L twin-turbo V6 engine, unmatched off-road capability and premium interior.",
                 features: ["3.5L V6 Twin-Turbo", "4WD", "Advanced Safety", "Luxury Interior", "Multi-Terrain Select"],
-                image: "images/vehicles/toyota-land-cruiser-300.jpg",
+                image: "images/vehicles/toyota-land-cruiser-300-2023.jpg",
                 specs: { engine: "3.5L V6 Twin-Turbo", power: "409 HP", torque: "650 Nm", transmission: "10-Speed Automatic", fuel: "Petrol/Hybrid" }
             },
             {
@@ -2238,22 +2238,226 @@ const spareParts = [
                   "Please use your order number as reference.");
         }
 
-        // Event listeners for payment buttons
-        document.addEventListener('DOMContentLoaded', function() {
-            const manualPaymentBtn = document.getElementById('manual-payment-btn');
-            if (manualPaymentBtn) {
-                manualPaymentBtn.addEventListener('click', function() {
-                    showManualPaymentInstructions();
-                });
+             // Backend API Configuration
+        const API_BASE_URL = 'http://localhost:3000/api';
+
+        // Load products from backend
+        async function loadProductsFromAPI() {
+            try {
+                // Load Yamaha Bikes
+                const bikesResponse = await fetch(`${API_BASE_URL}/products?category=motorbike`);
+                const bikes = await bikesResponse.json();
+                displayYamahaBikes(bikes, 6);
+                
+                // Load Toyota Cars
+                const carsResponse = await fetch(`${API_BASE_URL}/products?category=car`);
+                const cars = await carsResponse.json();
+                displayToyotaCars(cars, 6);
+                
+                // Load Commercial Vehicles
+                const vehiclesResponse = await fetch(`${API_BASE_URL}/products?category=vehicle`);
+                const vehicles = await vehiclesResponse.json();
+                displayCommercialVehicles(vehicles, 6);
+                
+                // Load Spare Parts
+                const partsResponse = await fetch(`${API_BASE_URL}/products?category=part`);
+                const parts = await partsResponse.json();
+                displaySpareParts(parts, 12);
+                
+                // Load Featured Parts
+                const featuredResponse = await fetch(`${API_BASE_URL}/products?featured=true&limit=4`);
+                const featuredParts = await featuredResponse.json();
+                
+                const featuredContainer = document.getElementById('featured-parts-container');
+                if (featuredContainer) {
+                    featuredContainer.innerHTML = '';
+                    featuredParts.forEach(part => {
+                        const partCard = createProductCard(part);
+                        featuredContainer.appendChild(partCard);
+                    });
+                }
+                
+            } catch (error) {
+                console.error('Error loading products from API:', error);
+                // Fallback to hardcoded data if API fails
+                console.log('Using hardcoded product data as fallback');
             }
+        }
+
+        // Submit order to backend
+        async function submitOrder(orderData) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/orders`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(orderData)
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    showPaymentSuccessModal();
+                    cart = []; // Clear cart
+                    saveCart();
+                    updateCartCount();
+                    return result;
+                } else {
+                    throw new Error('Failed to submit order');
+                }
+            } catch (error) {
+                showNotification('Error submitting order. Please try again.', 'error');
+                console.error('Order submission error:', error);
+            }
+        }
+
+        // Submit contact form to backend
+        async function submitContactForm(formData) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/contact`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    showNotification(result.message || 'Message sent successfully!');
+                    return result;
+                } else {
+                    throw new Error('Failed to submit contact form');
+                }
+            } catch (error) {
+                showNotification('Error sending message. Please try again.', 'error');
+                console.error('Contact form error:', error);
+            }
+        }
+
+        // Update contact form submission to use backend
+        const contactForm = document.getElementById('contact-form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const formData = {
+                    name: document.getElementById('contact-name').value,
+                    email: document.getElementById('contact-email').value,
+                    phone: document.getElementById('contact-phone').value,
+                    subject: document.getElementById('contact-subject').value,
+                    message: document.getElementById('contact-message').value
+                };
+                
+                await submitContactForm(formData);
+                contactForm.reset();
+            });
+        }
+
+        // Process checkout with backend integration
+        async function processCheckout(paymentMethod, paymentDetails) {
+            const orderData = {
+                customerName: document.getElementById('cardholder-name')?.value || 'Guest',
+                customerEmail: document.getElementById('email')?.value || 'customer@example.com',
+                customerPhone: '+254758772539',
+                items: cart.map(item => ({
+                    productId: item.id,
+                    name: item.name,
+                    price: item.price,
+                    quantity: item.quantity,
+                    image: item.image
+                })),
+                subtotal: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+                shipping: 50,
+                tax: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0) * 0.08,
+                total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0) + 50 + (cart.reduce((sum, item) => sum + (item.price * item.quantity), 0) * 0.08),
+                paymentMethod: paymentMethod,
+                paymentId: paymentDetails.paymentId,
+                paymentStatus: 'pending'
+            };
             
-            const mpesaPaymentBtn = document.getElementById('mpesa-payment-btn');
-            if (mpesaPaymentBtn) {
-                mpesaPaymentBtn.addEventListener('click', function() {
-                    alert("M-Pesa payment option is coming soon. Currently, please use PayPal or bank transfer.");
+            return await submitOrder(orderData);
+        }
+
+        // Update PayPal integration to use backend
+        if (typeof paypal !== 'undefined') {
+            paypal.Buttons({
+                createOrder: function(data, actions) {
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                value: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0) + 50 + (cart.reduce((sum, item) => sum + (item.price * item.quantity), 0) * 0.08)
+                            }
+                        }]
+                    });
+                },
+                onApprove: async function(data, actions) {
+                    return actions.order.capture().then(async function(details) {
+                        await processCheckout('paypal', { paymentId: details.id });
+                    });
+                }
+            }).render('#paypal-button-container');
+        }
+
+        // Update Stripe integration
+        const stripe = Stripe('YOUR_STRIPE_PUBLIC_KEY');
+        const elements = stripe.elements();
+        const cardElement = elements.create('card');
+        
+        if (document.getElementById('card-element')) {
+            cardElement.mount('#card-element');
+            
+            const paymentForm = document.getElementById('payment-form');
+            if (paymentForm) {
+                paymentForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const cardholderName = document.getElementById('cardholder-name');
+                    const email = document.getElementById('email');
+                    
+                    if (!cardholderName || !email) {
+                        showNotification('Please fill in all required fields', 'error');
+                        return;
+                    }
+                    
+                    const {paymentMethod, error} = await stripe.createPaymentMethod({
+                        type: 'card',
+                        card: cardElement,
+                        billing_details: {
+                            name: cardholderName.value,
+                            email: email.value
+                        }
+                    });
+                    
+                    if (error) {
+                        document.getElementById('card-errors').textContent = error.message;
+                    } else {
+                        await processCheckout('card', { paymentId: paymentMethod.id });
+                    }
                 });
             }
+        }
+
+        // Update manual payment button
+        const manualPaymentBtn = document.getElementById('manual-payment-btn');
+        if (manualPaymentBtn) {
+            manualPaymentBtn.addEventListener('click', async function() {
+                showManualPaymentInstructions();
+                await processCheckout('bank_transfer', { paymentId: 'manual_' + Date.now() });
+            });
+        }
+
+        // Initialize with API data on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Try to load from API first, fallback to hardcoded data
+            loadProductsFromAPI().catch(error => {
+                console.log('Using hardcoded data:', error);
+                displayYamahaBikes(yamahaBikes, 6);
+                displayToyotaCars(toyotaCars, 6);
+                displayCommercialVehicles(commercialVehicles, 6);
+                displaySpareParts(spareParts, 12);
+                displayFeaturedParts();
+            });
+            
+            loadCart(); // Your existing cart functionality
         });
-    </script>
-</body>
-</html>
