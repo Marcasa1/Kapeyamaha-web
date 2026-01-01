@@ -5,6 +5,14 @@ const morgan = require('morgan');
 const path = require('path');
 require('dotenv').config();
 
+require('dotenv').config({ path: '.env' });
+
+// Verify environment variables are loaded
+console.log('📧 Email Configuration:');
+console.log('   Host:', process.env.EMAIL_HOST);
+console.log('   User:', process.env.EMAIL_USER);
+console.log('   From:', process.env.EMAIL_FROM);
+console.log('   Admin:', process.env.ADMIN_EMAIL);
 const app = express();
 const PORT = process.env.PORT || 5000;
 
