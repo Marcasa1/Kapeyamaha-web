@@ -1,54 +1,59 @@
-console.log("Starting email test...");
+cat > test-testmail.js << 'EOF'
+const axios = require('axios');
+require('dotenv').config();
 
-const fs = require('fs');
-const path = require('path');
-
-console.log("Current directory:", __dirname);
-
-console.log("Files in this directory:");
-const files = fs.readdirSync('.');
-files.forEach(file => {
-    console.log("  - " + file);
-});
-
-console.log("\nChecking for .env file...");
-if (fs.existsSync('.env')) {
-    console.log("✅ .env file found!");
+async function testTestmailAPI() {
+    console.log('🔍 Testing Testmail API...\n');
     
-    // Load environment variables
-    require('dotenv').config();
+    const apiKey = process.env.TESTMAIL_API_KEY;
+    const namespace = process.env.TESTMAIL_NAMESPACE;
     
-    console.log("\nEnvironment variables found:");
-    console.log("PORT:", process.env.PORT || "Not set");
-    console.log("EMAIL_HOST:", process.env.EMAIL_HOST || "Not set");
-    console.log("EMAIL_USER:", process.env.EMAIL_USER || "Not set");
-    
-    if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
-        console.log("\n✅ Email credentials found in .env!");
-    } else {
-        console.log("\n❌ Email credentials missing in .env");
+    if (!apiKey || !namespace) {
+        console.error('❌ Missing Testmail credentials in .env file');
+        console.log('Add these to your .env file:');
+        console.log('TESTMAIL_API_KEY=your_api_key');
+        console.log('TESTMAIL_NAMESPACE=your_namespace');
+        return false;
     }
-} else {
-    console.log("❌ .env file not found!");
-    console.log("\nCreating .env template...");
     
-    const envContent = `# Email Configuration
-EMAIL_HOST=smtp.gmail.com
-EMAIL_PORT=587
-EMAIL_USER=your_email@gmail.com
-EMAIL_PASS=your_app_password
-EMAIL_FROM=kapeyamaha@gmail.com
-
-# Website Info
-SITE_NAME=KAPEYAMAHA ENTERPRISES LIMITED
-SITE_EMAIL=kapeyamaha@gmail.com
-SITE_PHONE=+254758772539
-
-# Server
-PORT=5000
-NODE_ENV=development`;
-    
-    fs.writeFileSync('.env', envContent);
-    console.log("✅ Created .env template file!");
-    console.log("\n📝 Please edit .env with your actual email credentials.");
+    try {
+        const response = await axios.get('https://api.testmail.app/api/json', {
+            params: {
+                apikey: apiKey,
+                namespace: namespace,
+                pretty: true
+            }
+        });
+        
+        console.log('✅ Testmail API is working!');
+        console.log(`📧 Emails in inbox: ${response.data.count}`);
+        console.log(`👤 Account: ${response.data.account}`);
+        
+        if (response.data.emails && response.data.emails.length > 0) {
+            console.log('\n📨 Recent emails:');
+            response.data.emails.slice(0, 3).forEach((email, i) => {
+                console.log(`  ${i+1}. ${email.subject} (${new Date(email.timestamp).toLocaleTimeString()})`);
+            });
+        }
+        
+        return true;
+    } catch (error) {
+        console.error('❌ Testmail API failed:', error.message);
+        return false;
+    }
 }
+
+// Run if called directly
+if (require.main === module) {
+    testTestmailAPI()
+        .then(success => {
+            process.exit(success ? 0 : 1);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            process.exit(1);
+        });
+}
+
+module.exports = testTestmailAPI;
+EOF
