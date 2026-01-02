@@ -1,0 +1,9 @@
+@echo off
+echo Stopping all Node processes...
+taskkill /f /im node.exe 2>nul
+echo Cleaning up...
+timeout /t 2 /nobreak >nul
+echo Starting KapeYamaha server...
+set PORT=3001
+npm run dev
+pause
