@@ -1,12 +1,10 @@
 # Dependencies
 node_modules/
 
-# Environment variables
+# Environment
 .env
 .env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env.*.local
 
 # Logs
 npm-debug.log*
@@ -14,38 +12,27 @@ yarn-debug.log*
 yarn-error.log*
 
 # Runtime data
-pids
 *.pid
 *.seed
 *.pid.lock
 
-# Coverage directory used by tools like istanbul
+# Coverage
 coverage/
 
-# nyc test coverage
-.nyc_output
+# Build
+dist/
+build/
+out/
 
-# OS generated files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# IDE/Editor
+# IDE
 .vscode/
 .idea/
 *.swp
 *.swo
 
-# Temporary files
-*.tmp
-*.temp.env
-.env.local
-*.env
-nul
-nul
-nul
-nul
+# OS
+.DS_Store
+Thumbs.db
+
+# Vercel
+.vercel
