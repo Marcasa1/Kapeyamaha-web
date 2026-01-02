@@ -1,38 +1,39 @@
-# Dependencies
-node_modules/
+# Windows artifacts
+nul
+Thumbs.db
+Desktop.ini
 
-# Environment
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+[Tt]humbs.db
+
+# Build directories
+node_modules/
+dist/
+build/
+
+# Environment variables
 .env
 .env.local
-.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # Logs
+logs
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Runtime data
-*.pid
-*.seed
-*.pid.lock
-
-# Coverage
-coverage/
-
-# Build
-dist/
-build/
-out/
-
-# IDE
+# Editor directories and files
 .vscode/
 .idea/
 *.swp
 *.swo
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Vercel
-.vercel
+*~
