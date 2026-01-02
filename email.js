@@ -1,42 +1,36 @@
 const nodemailer = require('nodemailer');
+require('dotenv').config();
 
-async function testEmail() {
-  try {
-    console.log('Testing nodemailer v' + nodemailer.version);
-    
-    // Generate a test account (Ethereal - for testing only)
-    let testAccount = await nodemailer.createTestAccount();
-    
-    console.log('Test account created:', testAccount.user);
-    
-    // Create transporter
-    let transporter = nodemailer.createTransport({
-      host: 'smtp.ethereal.email',
-      port: 587,
-      secure: false, // true for 465, false for other ports
-      auth: {
-        user: testAccount.user,
-        pass: testAccount.pass
-      }
-    });
+class EmailConfig {
+    constructor() {
+        this.transporter = nodemailer.createTransport({
+            host: process.env.EMAIL_HOST,
+            port: process.env.EMAIL_PORT,
+            secure: process.env.EMAIL_PORT == 465, // true for 465, false for other ports
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS,
+            },
+            tls: {
+                rejectUnauthorized: false // Only for development/testing
+            }
+        });
+    }
 
-    // Send test email
-    let info = await transporter.sendMail({
-      from: '"Nodemailer Test" <test@example.com>',
-      to: 'test@example.com',
-      subject: 'Test Email',
-      text: 'Hello from nodemailer v7!',
-      html: '<b>Hello from nodemailer v7!</b>'
-    });
+    async verifyConnection() {
+        try {
+            await this.transporter.verify();
+            console.log('✅ Email server connection verified');
+            return true;
+        } catch (error) {
+            console.error('❌ Email connection failed:', error);
+            return false;
+        }
+    }
 
-    console.log('✅ Email test successful!');
-    console.log('Message ID:', info.messageId);
-    console.log('Preview URL:', nodemailer.getTestMessageUrl(info));
-    
-  } catch (error) {
-    console.error('❌ Email test failed:', error.message);
-    console.error('Full error:', error);
-  }
+    getTransporter() {
+        return this.transporter;
+    }
 }
 
-testEmail();
+module.exports = new EmailConfig();

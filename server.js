@@ -5,16 +5,15 @@ const morgan = require('morgan');
 const path = require('path');
 require('dotenv').config();
 
-require('dotenv').config({ path: '.env' });
-
 // Verify environment variables are loaded
 console.log('📧 Email Configuration:');
-console.log('   Host:', process.env.EMAIL_HOST);
-console.log('   User:', process.env.EMAIL_USER);
-console.log('   From:', process.env.EMAIL_FROM);
-console.log('   Admin:', process.env.ADMIN_EMAIL);
+console.log('   Host:', process.env.EMAIL_HOST || 'Not set');
+console.log('   User:', process.env.EMAIL_USER || 'Not set');
+console.log('   From:', process.env.EMAIL_FROM || 'Not set');
+console.log('   Admin:', process.env.ADMIN_EMAIL || 'Not set');
+
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors());
@@ -25,34 +24,21 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static files (must come before routes)
+// Serve static files
 app.use(express.static(path.join(__dirname, 'public')));
 
 // View engine setup
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// ==============================================
-// ROUTES START HERE
-// ==============================================
-
-// Welcome route (added from your code)
+// Routes
 app.get('/', (req, res) => {
-    // You can choose to serve JSON or render a page
-    // Option 1: JSON response (as in your code)
-    // res.json({ message: 'Welcome to KapeYamaha API' });
-    
-    // Option 2: If you have a frontend, redirect to it
-    // res.redirect('/index.html');
-    
-    // Option 3: Render an EJS template
     res.render('index', { 
         title: 'KapeYamaha',
         message: 'Welcome to KapeYamaha API'
     });
 });
 
-// Health check endpoint
 app.get('/health', (req, res) => {
     res.json({
         status: 'OK',
@@ -64,32 +50,29 @@ app.get('/health', (req, res) => {
 });
 
 // Import API routes
-const apiRoutes = require('./routes/api');
-app.use('/api', apiRoutes);
+try {
+    const apiRoutes = require('./routes/api');
+    app.use('/api', apiRoutes);
+    console.log('✅ API routes loaded');
+} catch (error) {
+    console.log('⚠️  No API routes found, continuing without them');
+}
 
-// ==============================================
-// FIXED: SPA catch-all route (for React/Vue/Angular)
-// This must be the LAST route in your Express app
-// ==============================================
+// SPA catch-all route
 app.get('/*', (req, res, next) => {
-    // Check if the request is for an API route
     if (req.path.startsWith('/api')) {
-        return next(); // Pass to API routes
+        return next();
     }
     
-    // Check if it's a static file request
     if (req.path.includes('.')) {
-        return next(); // Let static middleware handle it
+        return next();
     }
     
-    // For all other routes, serve the SPA
     console.log(`📄 Serving SPA for path: ${req.path}`);
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// ==============================================
-// ERROR HANDLER (must come after all routes)
-// ==============================================
+// Error handler
 app.use((err, req, res, next) => {
     console.error('🔥 Error:', err.stack);
     res.status(500).json({
@@ -99,10 +82,16 @@ app.use((err, req, res, next) => {
     });
 });
 
-// ==============================================
-// START SERVER
-// ==============================================
-app.listen(PORT, () => {
+// 404 handler for API routes
+app.use('/api/*', (req, res) => {
+    res.status(404).json({
+        success: false,
+        message: 'API endpoint not found'
+    });
+});
+
+// Start server
+const server = app.listen(PORT, () => {
     console.log(`
     🚀 KAPEYAMAHA BACKEND RUNNING
     =============================
@@ -124,3 +113,21 @@ app.listen(PORT, () => {
     ⚡ Press Ctrl+C to stop
     `);
 });
+
+// Graceful shutdown
+process.on('SIGTERM', () => {
+    console.log('SIGTERM received. Shutting down gracefully...');
+    server.close(() => {
+        console.log('Server closed.');
+        process.exit(0);
+    });
+});
+
+process.on('SIGINT', () => {
+    console.log('SIGINT received. Shutting down gracefully...');
+    server.close(() => {
+        console.log('Server closed.');
+        process.exit(0);
+    });
+});
+
