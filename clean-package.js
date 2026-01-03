@@ -1,44 +1,35 @@
-﻿const fs = require("fs");
+﻿const fs = require('fs');
+const path = require('path');
+
+const filePath = path.join(__dirname, 'package.json');
 
 try {
-  // Try to read and parse the file to find errors
-  const content = fs.readFileSync("package.json", "utf8");
+  // Read the file
+  let content = fs.readFileSync(filePath, 'utf8');
+  console.log('Original content:');
+  console.log(content);
   
-  // Clean common issues:
-  let cleaned = content
-    .replace(/^\uFEFF/, "") // Remove BOM
-    .replace(/\r/g, "") // Remove carriage returns
-    .replace(/,\s*}/g, "}") // Remove trailing commas
-    .replace(/,\s*\]/g, "]"); // Remove trailing commas in arrays
+  // Fix: Remove extra spaces after colons
+  // Matches pattern: ":  " (colon followed by two or more spaces)
+  content = content.replace(/:\s+/g, ': ');
   
-  // Fix: Remove any extra characters before {
-  const jsonStart = cleaned.indexOf("{");
-  if (jsonStart > 0) {
-    cleaned = cleaned.substring(jsonStart);
+  // Also fix any BOM if present
+  if (content.charCodeAt(0) === 0xFEFF) {
+    content = content.slice(1);
+    console.log('Removed BOM');
   }
   
-  // Try to parse to validate
-  JSON.parse(cleaned);
-  
   // Write back
-  fs.writeFileSync("package.json", cleaned, "utf8");
-  console.log(" package.json cleaned and validated");
+  fs.writeFileSync(filePath, content);
+  
+  console.log('\nFixed content:');
+  console.log(content);
+  
+  // Verify it's valid JSON
+  JSON.parse(content);
+  console.log('✅ Valid JSON!');
   
 } catch (error) {
-  console.error("Error fixing package.json:", error.message);
-  
-  // Create a fresh template
-  const freshPackage = {
-    name: "kapeyamaha-web",
-    version: "1.0.0",
-    description: "",
-    main: "index.js",
-    scripts: {},
-    dependencies: {},
-    devDependencies: {}
-  };
-  
-  fs.writeFileSync("package.json", JSON.stringify(freshPackage, null, 2));
-  console.log(" Created fresh package.json template");
-  console.log(" You need to re-add your dependencies");
+  console.error('Error:', error.message);
+  process.exit(1);
 }

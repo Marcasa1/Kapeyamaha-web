@@ -1,32 +1,2259 @@
-export default function Home() {
-  return (
-    <main style={{ 
-      padding: '2rem', 
-      fontFamily: 'sans-serif',
-      maxWidth: '1200px',
-      margin: '0 auto'
-    }}>
-      <h1 style={{ color: '#2c3e50', fontSize: '2.5rem' }}>
-        Welcome to Kapeyamaha
-      </h1>
-      
-      <p style={{ fontSize: '1.2rem', lineHeight: '1.6', marginTop: '1rem' }}>
-        Your official website is now live and fully operational!
-      </p>
-      
-      <div style={{ marginTop: '2rem', padding: '1.5rem', backgroundColor: '#f8f9fa', borderRadius: '8px' }}>
-        <h2 style={{ color: '#3498db' }}>About Kapeyamaha</h2>
-        <p>Add your business description, services, or mission statement here.</p>
-      </div>
-      
-      <div style={{ marginTop: '2rem' }}>
-        <h2 style={{ color: '#3498db' }}>Contact Information</h2>
-        <ul style={{ listStyle: 'none', padding: 0 }}>
-          <li>📧 Email: info@kapeyamaha.com</li>
-          <li>📱 Phone: (123) 456-7890</li>
-          <li>📍 Address: Your Business Address</li>
-        </ul>
-      </div>
-    </main>
-  )
-}
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAPEYAMAHA LIMITED - Toyota Cars, Vehicles & Spare Parts</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Custom CSS Styles */
+        .cart-preview {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            max-width: 400px;
+            height: 100vh;
+            background: white;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ef4444;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .notification {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background: #10b981;
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 9999;
+            animation: slideIn 0.3s ease;
+        }
+
+        .notification.error {
+            background: #ef4444;
+        }
+
+        .notification.warning {
+            background: #f59e0b;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1001;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #666;
+            z-index: 10;
+        }
+
+        .close-modal:hover {
+            color: #ef4444;
+        }
+
+        .hero-bg {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('images/hero/background.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #ef4444;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .active-nav {
+            color: #ef4444;
+            font-weight: 600;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* WhatsApp Floating Button */
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 40px;
+            right: 40px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-float:hover {
+            background-color: #128C7E;
+            transform: scale(1.1);
+        }
+
+        .whatsapp-float i {
+            margin-top: 15px;
+        }
+
+        /* FAQ Accordion */
+        .faq-item {
+            margin-bottom: 10px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 16px 20px;
+            background: #f9fafb;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: #f3f4f6;
+        }
+
+        .faq-question i {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-question.active i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .faq-answer.open {
+            padding: 20px;
+            max-height: 500px;
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                width: 95%;
+                margin: 20px;
+            }
+            
+            .cart-preview {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+                font-size: 24px;
+            }
+
+            .whatsapp-float i {
+                margin-top: 13px;
+            }
+        }
+    </style>
+    <!-- PayPal SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=AYABQwMlBq4cAQ2gMwWg84K4Ctr5AYq9qJnJcwMfqQOXGqCQrUyY3xVDgE-U6eTmfOXd8q8XMf0BuFpR&currency=USD"></script>
+</head>
+<body class="font-sans bg-gray-100">
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/254758772539?text=Hello%20KAPEYAMAHA%20LIMITED,%20I%20have%20a%20question%20about%20your%20products" 
+   class="whatsapp-float" 
+   target="_blank"> 
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Header/Navigation -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <i class="fas fa-car text-red-600 text-3xl mr-2"></i>
+                <h1 class="text-xl md:text-2xl font-bold text-gray-800">
+                    <span class="text-red-600">KAPEYAMAHA ENTERPRISES</span> LIMITED
+                </h1>
+            </div>
+            
+            <nav class="hidden md:flex space-x-8">
+                <a href="#home" class="nav-link text-gray-800 font-medium active-nav">Home</a>
+                <a href="#bikes" class="nav-link text-gray-800 font-medium">Yamaha Bikes</a>
+                <a href="#cars" class="nav-link text-gray-800 font-medium">Toyota Cars</a>
+                <a href="#vehicles" class="nav-link text-gray-800 font-medium">Commercial Vehicles</a>
+                <a href="#spare-parts" class="nav-link text-gray-800 font-medium">Spare Parts</a>
+                <a href="#faq" class="nav-link text-gray-800 font-medium">Q&A</a>
+                <a href="#contact" class="nav-link text-gray-800 font-medium">Contact</a>
+            </nav>
+            
+            <div class="flex items-center space-x-6">
+                <div class="relative cursor-pointer" id="cart-icon">
+                    <i class="fas fa-shopping-cart text-2xl text-gray-800"></i>
+                    <span class="cart-count" id="cart-count">0</span>
+                </div>
+                
+                <button class="md:hidden text-gray-800" id="menu-toggle">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden bg-white w-full py-2 px-4 shadow-md" id="mobile-menu">
+            <a href="#home" class="block py-2 text-gray-800">Home</a>
+            <a href="#bikes" class="block py-2 text-gray-800">Yamaha Bikes</a>
+            <a href="#cars" class="block py-2 text-gray-800">Toyota Cars</a>
+            <a href="#vehicles" class="block py-2 text-gray-800">Commercial Vehicles</a>
+            <a href="#spare-parts" class="block py-2 text-gray-800">Spare Parts</a>
+            <a href="#faq" class="block py-2 text-gray-800">Q&A</a>
+            <a href="#contact" class="block py-2 text-gray-800">Contact</a>
+        </div>
+    </header>
+    
+    <!-- Cart Preview -->
+    <div class="cart-preview" id="cart-preview">
+        <div class="p-4 border-b">
+            <h3 class="font-bold text-lg">Shopping Cart</h3>
+            <button class="close-cart absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="p-4 max-h-96 overflow-y-auto" id="cart-items">
+            <p class="text-gray-500 text-center py-4">Your cart is empty</p>
+        </div>
+        <div class="p-4 border-t">
+            <div class="flex justify-between mb-3">
+                <span class="font-semibold">Items:</span>
+                <span class="font-bold" id="cart-items-count">0</span>
+            </div>
+            <div class="flex justify-between mb-3">
+                <span class="font-semibold">Total:</span>
+                <span class="font-bold" id="cart-total">$0.00</span>
+            </div>
+            <button class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition duration-300" id="checkout-btn">
+                Proceed to Checkout
+            </button>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
+
+    <!-- Product Modal -->
+    <div class="modal" id="product-modal">
+        <div class="modal-content max-w-4xl">
+            <span class="close-modal">&times;</span>
+            <div id="modal-content"></div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div class="modal" id="checkout-modal">
+        <div class="modal-content max-w-3xl">
+            <span class="close-modal">&times;</span>
+            <div class="p-6">
+                <h2 class="text-2xl font-bold mb-6">Complete Your Purchase</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Order Summary</h3>
+                        <div id="checkout-items" class="mb-6"></div>
+                        <div class="border-t pt-4">
+                            <div class="flex justify-between mb-2">
+                                <span>Subtotal</span>
+                                <span id="checkout-subtotal">$0.00</span>
+                            </div>
+                            <div class="flex justify-between mb-2">
+                                <span>Shipping</span>
+                                <span id="checkout-shipping">$50.00</span>
+                            </div>
+                            <div class="flex justify-between mb-2">
+                                <span>Tax</span>
+                                <span id="checkout-tax">$0.00</span>
+                            </div>
+                            <div class="flex justify-between text-lg font-bold">
+                                <span>Total</span>
+                                <span id="checkout-total">$0.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Payment Information</h3>
+                        
+                        <!-- PayPal Payment Section -->
+                        <div class="mb-6">
+                            <h4 class="font-semibold mb-3 text-gray-700">PayPal Payment</h4>
+                            <div id="paypal-button-container" class="mb-4"></div>
+                            <div class="flex items-center justify-center my-4">
+                                <div class="border-t border-gray-300 flex-grow"></div>
+                                <span class="mx-4 text-gray-500">or</span>
+                                <div class="border-t border-gray-300 flex-grow"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Credit Card Payment Section -->
+                        <div class="mb-6">
+                            <h4 class="font-semibold mb-3 text-gray-700">Credit/Debit Card</h4>
+                            <form id="payment-form" class="space-y-4">
+                                <div>
+                                    <label class="block mb-1">Cardholder Name</label>
+                                    <input type="text" id="cardholder-name" required class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-600">
+                                </div>
+                                
+                                <div>
+                                    <label class="block mb-1">Email</label>
+                                    <input type="email" id="email" required class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-600">
+                                </div>
+                                
+                                <div>
+                                    <label class="block mb-1">Card Information</label>
+                                    <div id="card-element" class="p-3 border border-gray-300 rounded">
+                                        <!-- Stripe Card Element will be inserted here -->
+                                    </div>
+                                    <div id="card-errors" class="text-red-500 mt-2 text-sm"></div>
+                                </div>
+                                
+                                <div class="flex items-center mb-4">
+                                    <input type="checkbox" id="terms" required class="mr-2">
+                                    <label for="terms" class="text-sm">I agree to the Terms & Conditions</label>
+                                </div>
+                                
+                                <button type="submit" id="submit-payment" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded transition duration-300">
+                                    Pay Now
+                                </button>
+                                
+                                <div id="payment-processing" class="hidden text-center">
+                                    <div class="spinner mb-2"></div>
+                                    <p>Processing payment...</p>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <!-- Alternative Payment Methods -->
+                        <div class="mt-6 pt-6 border-t border-gray-200">
+                            <h4 class="font-semibold mb-3 text-gray-700">Other Payment Methods</h4>
+                            <div class="space-y-3">
+                                <button class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded transition duration-300 flex items-center justify-center" id="manual-payment-btn">
+                                    <i class="fas fa-university mr-2"></i>
+                                    Bank Transfer
+                                </button>
+                                <button class="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded transition duration-300 flex items-center justify-center" id="mpesa-payment-btn">
+                                    <i class="fas fa-mobile-alt mr-2"></i>
+                                    M-Pesa (Coming Soon)
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Success Modal -->
+    <div class="modal" id="payment-success-modal">
+        <div class="modal-content max-w-md">
+            <div class="p-8 text-center">
+                <div class="text-green-500 text-6xl mb-4">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2 class="text-2xl font-bold mb-4">Payment Successful!</h2>
+                <p class="text-gray-600 mb-6">
+                    Thank you for your purchase. Your order has been received and is being processed.
+                    You will receive a confirmation email shortly.
+                </p>
+                <div class="space-y-3">
+                    <button onclick="closePaymentSuccessModal()" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded transition duration-300 w-full">
+                        Continue Shopping
+                    </button>
+                    <button onclick="printReceipt()" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded transition duration-300 w-full">
+                        <i class="fas fa-print mr-2"></i>Print Receipt
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-bg text-white py-20 md:py-32">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">Your Complete Automotive Solution</h1>
+            <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+                Premium Toyota Cars, Yamaha Motorbikes, Commercial Vehicles & Genuine Spare Parts
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#cars" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                    Browse Toyota Cars
+                </a>
+                <a href="#spare-parts" class="bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                    Shop Spare Parts
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Categories -->
+    <section class="bg-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <a href="#cars" class="category-card bg-red-50 p-6 rounded-lg text-center hover:shadow-lg transition duration-300">
+                    <div class="text-red-600 text-4xl mb-4">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800">Toyota Cars</h3>
+                    <p class="text-gray-600 text-sm mt-2">Sedans, SUVs, Pickups</p>
+                </a>
+                
+                <a href="#bikes" class="category-card bg-blue-50 p-6 rounded-lg text-center hover:shadow-lg transition duration-300">
+                    <div class="text-blue-600 text-4xl mb-4">
+                        <i class="fas fa-motorcycle"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800">Yamaha Bikes</h3>
+                    <p class="text-gray-600 text-sm mt-2">Sport, Cruiser, Scooters</p>
+                </a>
+                
+                <a href="#vehicles" class="category-card bg-green-50 p-6 rounded-lg text-center hover:shadow-lg transition duration-300">
+                    <div class="text-green-600 text-4xl mb-4">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800">Commercial Vehicles</h3>
+                    <p class="text-gray-600 text-sm mt-2">Vans, Trucks, Buses</p>
+                </a>
+                
+                <a href="#spare-parts" class="category-card bg-yellow-50 p-6 rounded-lg text-center hover:shadow-lg transition duration-300">
+                    <div class="text-yellow-600 text-4xl mb-4">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800">Spare Parts</h3>
+                    <p class="text-gray-600 text-sm mt-2">Toyota & Yamaha Parts</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="bg-gray-50 py-16">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Why Choose KAPEYAMAHA?</h2>
+                <div class="w-24 h-1 bg-red-600 mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300 text-center">
+                    <div class="text-red-600 text-4xl mb-4">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-800">Genuine Products</h3>
+                    <p class="text-gray-600">All vehicles and parts are 100% genuine with complete documentation and warranty.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300 text-center">
+                    <div class="text-red-600 text-4xl mb-4">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-800">Expert Service</h3>
+                    <p class="text-gray-600">Certified technicians for Toyota and Yamaha vehicles with state-of-the-art workshops.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300 text-center">
+                    <div class="text-red-600 text-4xl mb-4">
+                        <i class="fas fa-hand-holding-usd"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-800">Flexible Financing</h3>
+                    <p class="text-gray-600">Competitive prices with flexible financing options and trade-in facilities.</p>
+                </div>
+            </div>
+            
+            <!-- Payment Methods Section -->
+            <div class="mt-16 text-center">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6">Secure Payment Methods</h3>
+                <div class="flex justify-center items-center space-x-8">
+                    <div class="text-blue-600 text-5xl">
+                        <i class="fab fa-paypal"></i>
+                    </div>
+                    <div class="text-gray-800 text-5xl">
+                        <i class="fab fa-cc-visa"></i>
+                    </div>
+                    <div class="text-blue-800 text-5xl">
+                        <i class="fab fa-cc-mastercard"></i>
+                    </div>
+                    <div class="text-orange-600 text-5xl">
+                        <i class="fas fa-university"></i>
+                    </div>
+                </div>
+                <p class="text-gray-600 mt-4">We accept all major payment methods including PayPal, credit/debit cards, and bank transfers</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Toyota Cars Section -->
+    <section id="cars" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Toyota Car Collection</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Reliability, performance, and luxury in our curated Toyota collection</p>
+                <div class="w-24 h-1 bg-red-600 mx-auto mt-4"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="cars-container">
+                <!-- Toyota Cars will be loaded dynamically -->
+            </div>
+            
+            <div class="text-center mt-10">
+                <button id="load-more-cars" class="inline-block bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                    View All Toyota Cars
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Yamaha Motorbikes Section -->
+    <section id="bikes" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Yamaha Motorbike Collection</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Discover our range of high-performance Yamaha motorcycles for every rider</p>
+                <div class="w-24 h-1 bg-red-600 mx-auto mt-4"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="bikes-container">
+                <!-- Yamaha Bikes will be loaded dynamically -->
+            </div>
+            
+            <div class="text-center mt-10">
+                <button id="load-more-bikes" class="inline-block bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                    View All Yamaha Bikes
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Commercial Vehicles Section -->
+    <section id="vehicles" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Commercial & Utility Vehicles</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Reliable commercial vehicles for business and utility purposes</p>
+                <div class="w-24 h-1 bg-red-600 mx-auto mt-4"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="vehicles-container">
+                <!-- Commercial Vehicles will be loaded dynamically -->
+            </div>
+            
+            <div class="text-center mt-10">
+                <button id="load-more-vehicles" class="inline-block bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                    View All Commercial Vehicles
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Spare Parts Section -->
+    <section id="spare-parts" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Genuine Spare Parts</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Original Toyota & Yamaha spare parts for optimal performance and longevity</p>
+                <div class="w-24 h-1 bg-red-600 mx-auto mt-4"></div>
+            </div>
+            
+            <!-- Spare Parts Categories -->
+            <div class="mb-12">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-6">Parts Categories</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                    <button class="category-filter-btn bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition duration-300 text-center" data-category="all">
+                        <div class="text-red-600 text-2xl mb-2">
+                            <i class="fas fa-th"></i>
+                        </div>
+                        <span class="text-sm font-medium">All Parts</span>
+                    </button>
+                    
+                    <button class="category-filter-btn bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition duration-300 text-center" data-category="engine">
+                        <div class="text-red-600 text-2xl mb-2">
+                            <i class="fas fa-cog"></i>
+                        </div>
+                        <span class="text-sm font-medium">Engine Parts</span>
+                    </button>
+                    
+                    <button class="category-filter-btn bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition duration-300 text-center" data-category="brake">
+                        <div class="text-red-600 text-2xl mb-2">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <span class="text-sm font-medium">Brake System</span>
+                    </button>
+                    
+                    <button class="category-filter-btn bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition duration-300 text-center" data-category="electrical">
+                        <div class="text-red-600 text-2xl mb-2">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <span class="text-sm font-medium">Electrical</span>
+                    </button>
+                    
+                    <button class="category-filter-btn bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition duration-300 text-center" data-category="suspension">
+                        <div class="text-red-600 text-2xl mb-2">
+                            <i class="fas fa-car-side"></i>
+                        </div>
+                        <span class="text-sm font-medium">Suspension</span>
+                    </button>
+                    
+                    <button class="category-filter-btn bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition duration-300 text-center" data-category="body">
+                        <div class="text-red-600 text-2xl mb-2">
+                            <i class="fas fa-car"></i>
+                        </div>
+                        <span class="text-sm font-medium">Body Parts</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Spare Parts Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="parts-container">
+                <!-- Spare Parts will be loaded dynamically -->
+            </div>
+            
+            <div class="text-center mt-10">
+                <button id="load-more-parts" class="inline-block bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                    View All Spare Parts
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Q&A / FAQ Section -->
+    <section id="faq" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Frequently Asked Questions</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Get answers to common questions about our products and services</p>
+                <div class="w-24 h-1 bg-red-600 mx-auto mt-4"></div>
+            </div>
+
+            <div class="max-w-4xl mx-auto">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>How can I verify if a spare part is genuine Toyota or Yamaha?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>All our spare parts come with original manufacturer packaging, hologram stickers, and serial numbers. You can verify authenticity by:</p>
+                        <ul class="list-disc pl-5 mt-2 space-y-1">
+                            <li>Checking for the official Toyota or Yamaha logo on packaging</li>
+                            <li>Using the serial number to verify on the manufacturer's website</li>
+                            <li>Requesting the Certificate of Authenticity from our sales team</li>
+                            <li>Visiting our physical store for verification</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>What warranty do you offer on vehicles and spare parts?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We provide comprehensive warranty coverage:</p>
+                        <ul class="list-disc pl-5 mt-2 space-y-1">
+                            <li><strong>New Vehicles:</strong> 3 years or 100,000 km (whichever comes first)</li>
+                            <li><strong>Used Vehicles:</strong> 1 year or 50,000 km comprehensive warranty</li>
+                            <li><strong>Spare Parts:</strong> 6 months to 1 year depending on the part</li>
+                            <li><strong>Labor:</strong> 30-day warranty on installation services</li>
+                        </ul>
+                        <p class="mt-3">All warranties are subject to terms and conditions. Contact us for detailed warranty information.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>How can I make payments for purchases?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We accept multiple payment methods for your convenience:</p>
+                        <ul class="list-disc pl-5 mt-2 space-y-1">
+                            <li><strong>Online:</strong> PayPal, Credit/Debit Cards (Visa, MasterCard)</li>
+                            <li><strong>Bank Transfer:</strong> Direct bank transfers to our account</li>
+                            <li><strong>Mobile Money:</strong> M-Pesa (Kenya only)</li>
+                            <li><strong>Cash:</strong> At our physical location in Kapenguria</li>
+                            <li><strong>Financing:</strong> Vehicle financing through partner banks</li>
+                        </ul>
+                        <p class="mt-3">For vehicle purchases, we also offer trade-in options and installment payment plans.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Do you offer delivery services for vehicles and parts?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we provide delivery services across Kenya and neighboring countries:</p>
+                        <ul class="list-disc pl-5 mt-2 space-y-1">
+                            <li><strong>Spare Parts:</strong> Door-to-door delivery within 2-5 business days</li>
+                            <li><strong>Vehicles:</strong> Professional delivery with driver (additional cost)</li>
+                            <li><strong>Shipping:</strong> International shipping available for spare parts</li>
+                            <li><strong>Free Delivery:</strong> For spare parts orders above $500 within Nairobi</li>
+                        </ul>
+                        <p class="mt-3">Contact our logistics department for customized delivery solutions.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>How do I schedule maintenance or repair services?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>You can schedule services through multiple channels:</p>
+                        <ul class="list-disc pl-5 mt-2 space-y-1">
+                            <li><strong>Phone:</strong> Call +254 758 772 539 during business hours</li>
+                            <li><strong>WhatsApp:</strong> Message us on WhatsApp for quick scheduling</li>
+                            <li><strong>Email:</strong> Send service requests to kapeyamaha@gmail.com</li>
+                            <li><strong>In-person:</strong> Visit our service center in Kapenguria</li>
+                            <li><strong>Online:</strong> Use our website contact form</li>
+                        </ul>
+                        <p class="mt-3">We recommend booking appointments in advance, especially during peak seasons.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>What should I do if I receive a damaged or wrong part?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We have a straightforward return and replacement policy:</p>
+                        <ul class="list-disc pl-5 mt-2 space-y-1">
+                            <li><strong>Immediate Notification:</strong> Contact us within 24 hours of delivery</li>
+                            <li><strong>Documentation:</strong> Send photos of the damaged/wrong part</li>
+                            <li><strong>Free Replacement:</strong> We'll ship the correct part at no extra cost</li>
+                            <li><strong>Return Pickup:</strong> We arrange pickup of the incorrect part</li>
+                            <li><strong>Refund Option:</strong> Full refund if replacement isn't possible</li>
+                        </ul>
+                        <p class="mt-3">Our customer service team is available to handle such cases.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <div class="bg-green-50 p-6 rounded-lg inline-block max-w-2xl">
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Still have questions?</h3>
+                    <p class="text-gray-600 mb-4">Our team is ready to help you via WhatsApp for instant responses</p>
+                    <a href="https://wa.me/254758772539?text=Hello%20KAPEYAMAHA,%20I%20have%20a%20question%20about%3A%20" 
+                       target="_blank"
+                       class="inline-flex items-center bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                        <i class="fab fa-whatsapp mr-2 text-xl"></i>
+                        Ask on WhatsApp Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Spare Parts -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Featured Spare Parts</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Top quality parts for your Toyota and Yamaha vehicles</p>
+                <div class="w-24 h-1 bg-red-600 mx-auto mt-4"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="featured-parts-container">
+                <!-- Featured parts will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Our Parts -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Why Choose Our Spare Parts?</h2>
+                <div class="w-24 h-1 bg-red-600 mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="flex items-start">
+                        <div class="text-green-600 text-2xl mr-4">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold mb-2">100% Genuine</h3>
+                            <p class="text-gray-600">All parts are original Toyota and Yamaha genuine parts with manufacturer warranty.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="flex items-start">
+                        <div class="text-green-600 text-2xl mr-4">
+                            <i class="fas fa-shipping-fast"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold mb-2">Fast Delivery</h3>
+                            <p class="text-gray-600">Same-day dispatch for in-stock items. Free delivery on orders above $500.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="flex items-start">
+                        <div class="text-green-600 text-2xl mr-4">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold mb-2">Expert Support</h3>
+                            <p class="text-gray-600">Our technical team is available to help you find the right parts for your vehicle.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vehicle Services -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Vehicle Services</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Complete automotive services for all your needs</p>
+                <div class="w-24 h-1 bg-red-600 mx-auto mt-4"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="service-card bg-white p-6 rounded-lg text-center hover:shadow-lg transition duration-300">
+                    <div class="text-red-600 text-4xl mb-4">
+                        <i class="fas fa-wrench"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">General Repairs</h3>
+                    <p class="text-gray-600">Comprehensive repair services for all Toyota and Yamaha vehicles.</p>
+                </div>
+                
+                <div class="service-card bg-white p-6 rounded-lg text-center hover:shadow-lg transition duration-300">
+                    <div class="text-red-600 text-4xl mb-4">
+                        <i class="fas fa-oil-can"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Regular Maintenance</h3>
+                    <p class="text-gray-600">Scheduled maintenance to keep your vehicle running smoothly.</p>
+                </div>
+                
+                <div class="service-card bg-white p-6 rounded-lg text-center hover:shadow-lg transition duration-300">
+                    <div class="text-red-600 text-4xl mb-4">
+                        <i class="fas fa-car-battery"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Electrical Services</h3>
+                    <p class="text-gray-600">Diagnosis and repair of all electrical systems in your vehicle.</p>
+                </div>
+                
+                <div class="service-card bg-white p-6 rounded-lg text-center hover:shadow-lg transition duration-300">
+                    <div class="text-red-600 text-4xl mb-4">
+                        <i class="fas fa-tire"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Tire Services</h3>
+                    <p class="text-gray-600">Tire fitting, balancing, alignment, and puncture repairs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">What Our Customers Say</h2>
+                <div class="w-24 h-1 bg-red-600 mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-white p-6 rounded-lg shadow-sm testimonial-card">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gray-300 mr-4 overflow-hidden">
+                            <img src="images/vehicles/suv1.jpg" alt="Customer" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">NANCY C.</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">
+                        "Bought my Toyota Hilux from KAPEYAMAHA and couldn't be happier. Their after-sales service is exceptional!"
+                    </p>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="bg-white p-6 rounded-lg shadow-sm testimonial-card">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gray-300 mr-4 overflow-hidden">
+                            <img src="images/vehicles/suv5.jpg" alt="Customer" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">ALFRED O</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">
+                        "Found all the genuine parts I needed for Yamaha at reasonable prices including a fleet of YBR motorbikes. Staff was very knowledgeable and helpful."
+                    </p>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="bg-white p-6 rounded-lg shadow-sm testimonial-card">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gray-300 mr-4 overflow-hidden">
+                            <img src="images/vehicles/suvs3.jpg" alt="Customer" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">ALBERT W.</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">
+                        "Excellent selection of Toyota cars and commercial vehicles. Our business fleet has been running perfectly."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+<section id="contact" class="py-16 bg-gray-800 text-white">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold mb-4">Contact Us</h2>
+            <p class="max-w-2xl mx-auto">Have questions? Reach out to our team for assistance</p>
+            <div class="w-24 h-1 bg-red-600 mx-auto mt-4"></div>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div>
+                <h3 class="text-xl font-semibold mb-6">Get In Touch</h3>
+                
+                <div class="mb-6">
+                    <div class="flex items-start mb-4">
+                        <i class="fas fa-map-marker-alt text-red-600 mt-1 mr-4"></i>
+                        <div>
+                            <h4 class="font-medium">Address</h4>
+                            <p class="text-gray-300">Kapeyamaha Enterprises Limited</p>
+                            <p class="text-gray-300">Kitale-Lodwar Highway</p>
+                            <p class="text-gray-300">Kapenguria, Kenya</p>
+                            <p class="text-gray-300">P.O. Box 654-30600</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start mb-4">
+                        <i class="fas fa-phone-alt text-red-600 mt-1 mr-4"></i>
+                        <div>
+                            <h4 class="font-medium">Phone & WhatsApp</h4>
+                            <p class="text-gray-300">+254 758 772 539</p>
+                            <p class="text-gray-300">+254 758 772 539 (24/7 Support)</p>
+                            <p class="text-gray-300 mt-2">
+                                <a href="https://wa.me/254758772539" 
+                                   target="_blank" 
+                                   class="text-green-400 hover:text-green-300 underline">
+                                    <i class="fab fa-whatsapp mr-1"></i>Click to WhatsApp Now
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <i class="fas fa-envelope text-red-600 mt-1 mr-4"></i>
+                        <div>
+                            <h4 class="font-medium">Email</h4>
+                            <p class="text-gray-300">kapeyamaha@gmail.com</p>
+                            <p class="text-gray-300">kapeyamaha@gmail.com (Sales)</p>
+                            <p class="text-gray-300">kapeyamaha@gmail.com (Parts & Service)</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 class="text-xl font-semibold mb-4">Business Hours</h3>
+                <div class="text-gray-300">
+                    <p class="mb-1"><strong>Vehicle Sales:</strong> Monday - Saturday: 8:00 AM - 6:00 PM</p>
+                    <p class="mb-1"><strong>Parts Department:</strong> Monday - Friday: 8:00 AM - 5:00 PM</p>
+                    <p class="mb-1"><strong>Service Center:</strong> Monday - Saturday: 7:30 AM - 5:30 PM</p>
+                    <p>Sunday: Closed (Emergency Service Available)</p>
+                </div>
+                
+                <h3 class="text-xl font-semibold mt-6 mb-4">Payment Support</h3>
+                <p class="text-gray-300">Need help with payment? Call or WhatsApp: <strong>+254 758 772 539</strong> or email: <strong>kapeyamaha@gmail.com</strong></p>
+                
+                <div class="mt-6">
+                    <a href="https://wa.me/254758772539?text=Hello%20KAPEYAMAHA,%20I%20need%20assistance%20with:" 
+                       target="_blank"
+                       class="inline-flex items-center bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                        <i class="fab fa-whatsapp mr-2 text-xl"></i>
+                        WhatsApp Us Now
+                    </a>
+                </div>
+            </div>
+            
+            <div>
+                <h3 class="text-xl font-semibold mb-6">Send Us a Message</h3>
+                <form id="contact-form" class="space-y-4">
+                    <div>
+                        <label for="contact-name" class="block mb-1">Name *</label>
+                        <input type="text" id="contact-name" required class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-red-600">
+                    </div>
+                    
+                    <div>
+                        <label for="contact-email" class="block mb-1">Email *</label>
+                        <input type="email" id="contact-email" required class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-red-600">
+                    </div>
+                    
+                    <div>
+                        <label for="contact-phone" class="block mb-1">Phone *</label>
+                        <input type="tel" id="contact-phone" required class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-red-600">
+                    </div>
+                    
+                    <div>
+                        <label for="contact-subject" class="block mb-1">Subject</label>
+                        <select id="contact-subject" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-red-600">
+                            <option value="general">General Inquiry</option>
+                            <option value="sales">Vehicle Sales</option>
+                            <option value="parts">Spare Parts</option>
+                            <option value="service">Vehicle Service</option>
+                            <option value="support">Technical Support</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="contact-message" class="block mb-1">Message *</label>
+                        <textarea id="contact-message" rows="4" required class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-red-600"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded transition duration-300">
+                        Send Message
+                    </button>
+                </form>
+                
+                <div class="mt-6 p-4 bg-gray-700 rounded-lg">
+                    <h4 class="font-semibold mb-2">Prefer WhatsApp?</h4>
+                    <p class="text-gray-300 text-sm mb-3">Get instant responses by messaging us directly on WhatsApp:</p>
+                    <a href="https://wa.me/254758772539?text=Hello%20KAPEYAMAHA,%20I%20would%20like%20to%20inquire%20about:" 
+                       target="_blank"
+                       class="inline-flex items-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition duration-300 text-sm">
+                        <i class="fab fa-whatsapp mr-2"></i>
+                        Message on WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Map Section -->
+        <div class="mt-12">
+            <h3 class="text-xl font-semibold mb-6 text-center">Our Location - Kapenguria Sub-station</h3>
+            <div class="bg-white p-4 rounded-lg shadow-lg">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div>
+                        <p class="text-gray-700 mb-4">
+                            <strong>KAPEYAMAHA ENTERPRISES LIMITED</strong> is strategically located along the Kitale-Lodwar Highway in Kapenguria, 
+                            serving customers across Western Kenya and beyond. Our sub-station is easily accessible with ample parking space Kape Yamaha Enterprise Limited is your preferred mobility solutions partner specializing in a broad range of 
+                            motor related products, Services and Parts. 
+                       </p>
+                        <ul class="text-gray-700 space-y-2">
+                            <li><i class="fas fa-map-marker-alt text-red-600 mr-2"></i> Along Kitale-Lodwar Highway</li>
+                            <li><i class="fas fa-road text-red-600 mr-2"></i> Main road accessibility</li>
+                            <li><i class="fas fa-parking text-red-600 mr-2"></i> Ample parking space</li>
+                            <li><i class="fas fa-truck text-red-600 mr-2"></i> Easy vehicle delivery access</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gray-100 rounded-lg overflow-hidden">
+                        <!-- Map Container -->
+                        <div id="map-container" class="h-64 lg:h-full">
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.742345845139!2d35.1002773147539!3d1.2384477991361726!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x17810b2c6d0b5f7d%3A0x4c2c2b5b5b5b5b5b!2sKapenguria!5e0!3m2!1sen!2ske!4v1620000000000!5m2!1sen!2ske" 
+                                width="100%" 
+                                height="100%" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-car text-red-600 text-2xl mr-2"></i>
+                        <h3 class="text-xl font-bold text-white">
+                            <span class="text-red-600">KAPEYAMAHA</span> LIMITED
+                        </h3>
+                    </div>
+                    <p class="mb-4">
+                        Your trusted partner for quality Toyota cars, Yamaha motorbikes, commercial vehicles, and genuine spare parts since 2005.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="social-icon text-gray-400 hover:text-red-600 transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-icon text-gray-400 hover:text-red-600 transition duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-icon text-gray-400 hover:text-red-600 transition duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://wa.me/254758772539" target="_blank" class="social-icon text-gray-400 hover:text-green-500 transition duration-300">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="hover:text-red-600 transition duration-300">Home</a></li>
+                        <li><a href="#cars" class="hover:text-red-600 transition duration-300">Toyota Cars</a></li>
+                        <li><a href="#bikes" class="hover:text-red-600 transition duration-300">Yamaha Bikes</a></li>
+                        <li><a href="#vehicles" class="hover:text-red-600 transition duration-300">Commercial Vehicles</a></li>
+                        <li><a href="#spare-parts" class="hover:text-red-600 transition duration-300">Spare Parts</a></li>
+                        <li><a href="#faq" class="hover:text-red-600 transition duration-300">Q&A</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Our Services</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-red-600 transition duration-300">New Vehicle Sales</a></li>
+                        <li><a href="#" class="hover:text-red-600 transition duration-300">Used Vehicles</a></li>
+                        <li><a href="#" class="hover:text-red-600 transition duration-300">Spare Parts Supply</a></li>
+                        <li><a href="#" class="hover:text-red-600 transition duration-300">Vehicle Maintenance</a></li>
+                        <li><a href="#" class="hover:text-red-600 transition duration-300">Body Repairs</a></li>
+                        <li><a href="#" class="hover:text-red-600 transition duration-300">Financing Solutions</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Newsletter</h4>
+                    <p class="mb-4">
+                        Subscribe to get updates on new arrivals, special offers, and automotive tips.
+                    </p>
+                    <form id="newsletter-form" class="flex">
+                        <input type="email" id="newsletter-email" placeholder="Your email" required class="px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded-l focus:outline-none focus:ring-1 focus:ring-red-600 w-full">
+                        <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-r transition duration-300">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center">
+                <p>&copy; <span id="current-year">2023</span> KAPEYAMAHA ENTERPRISES LIMITED. All rights reserved.</p>
+                <p class="mt-2 text-sm">Secure payments powered by PayPal and Stripe</p>
+                <div class="flex justify-center space-x-4 mt-4">
+                    <img src="https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-100px.png" alt="PayPal" class="h-8">
+                    <img src="https://www.paypalobjects.com/webstatic/mktg/Logo/AM_SbyPP_mc_vs_ms_ae_UK.png" alt="Accepted Cards" class="h-8">
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        // FAQ Toggle Function
+        function toggleFAQ(element) {
+            const faqItem = element.closest('.faq-item');
+            const answer = faqItem.querySelector('.faq-answer');
+            const icon = element.querySelector('i');
+            
+            element.classList.toggle('active');
+            answer.classList.toggle('open');
+            
+            // Close other FAQs
+            document.querySelectorAll('.faq-item').forEach(item => {
+                if (item !== faqItem) {
+                    item.querySelector('.faq-question').classList.remove('active');
+                    item.querySelector('.faq-answer').classList.remove('open');
+                }
+            });
+        }
+
+        // Products data
+        const yamahaBikes = [
+            {
+                id: "bike-01",
+                name: "Yamaha YZF-R1",
+                category: "motorbike",
+                price: 15999,
+                description: "Superbike with 998cc crossplane engine, advanced electronics, and aerodynamic design for track and street.",
+                features: ["998cc Engine", "200 HP", "Quick Shifter", "LED Lighting", "TFT Display"],
+                image: "images/vehicles/yamaha-yzf-r1.jpg",
+                specs: { engine: "998cc Liquid-cooled", power: "200 HP", torque: "113 Nm", weight: "201 kg", fuelCapacity: "17L" }
+            },
+            {
+                id: "bike-02",
+                name: "Yamaha MT-07",
+                category: "motorbike",
+                price: 7999,
+                description: "Naked bike with 689cc twin-cylinder engine, perfect for city riding and weekend adventures.",
+                features: ["689cc CP2 Engine", "75 HP", "Lightweight Chassis", "ABS", "LED Headlight"],
+                image: "images/vehicles/yamaha-mt-07.jpg",
+                specs: { engine: "689cc Liquid-cooled", power: "75 HP", torque: "68 Nm", weight: "184 kg", fuelCapacity: "14L" }
+            },
+            {
+                id: "bike-03",
+                name: "Yamaha XMAX 300",
+                category: "motorbike",
+                price: 5499,
+                description: "Maxi-scooter with 292cc engine, ample storage, and premium features for urban commuting.",
+                features: ["292cc Engine", "Smart Key System", "TCS", "Large Underseat Storage", "LED Lights"],
+                image: "images/vehicles/yamaha-xmax-300.jpg",
+                specs: { engine: "292cc Liquid-cooled", power: "28 HP", torque: "29 Nm", weight: "179 kg", fuelCapacity: "13L" }
+            },
+            {
+                id: "bike-04",
+                name: "yamaha Tenere",
+                category: "motorbike",
+                price: 10999,
+                description: "Adventure bike with 689cc CP2 engine, long travel suspension, and rugged design for off-road exploration.",
+                features: ["689cc CP2 Engine", "Rally Heritage", "Adventure Ready", "Spoke Wheels", "Adjustable Suspension"],
+                image: "images/vehicles/yamaha-tenere.jpg",
+                specs: { engine: "689cc Liquid-cooled", power: "73 HP", torque: "68 Nm", weight: "205 kg", fuelCapacity: "16L" }
+            },
+            {
+                id: "bike-05",
+                name: "Yamaha YZF-R3",
+                category: "motorbike",
+                price: 5299,
+                description: "Entry-level sportbike with 321cc twin-cylinder engine, perfect for new riders and track days.",
+                features: ["321cc Twin", "Sport Handling", "ABS", "LED Lights", "Lightweight"],
+                image: "images/vehicles/yamaha-yzf-r3.jpg",
+                specs: { engine: "321cc Liquid-cooled", power: "42 HP", torque: "30 Nm", weight: "169 kg", fuelCapacity: "14L" }
+            },
+            {
+                id: "bike-06",
+                name: "Yamaha MT-09",
+                category: "motorbike",
+                price: 9499,
+                description: "Hyper Naked with 890cc triple-cylinder engine, aggressive styling, and advanced electronics.",
+                features: ["890cc CP3 Engine", "Quick Shifter", "TCS", "LED Lighting", "Multiple Riding Modes"],
+                image: "images/vehicles/yamaha-mt-09.jpg",
+                specs: { engine: "890cc Liquid-cooled", power: "119 HP", torque: "93 Nm", weight: "193 kg", fuelCapacity: "14L" }
+            }
+        ];
+
+        const toyotaCars = [
+            {
+                id: "car-01",
+                name: "Toyota Land Cruiser 300",
+                category: "car",
+                price: 125000,
+                description: "Flagship luxury SUV with 3.5L twin-turbo V6 engine, unmatched off-road capability and premium interior.",
+                features: ["3.5L V6 Twin-Turbo", "4WD", "Advanced Safety", "Luxury Interior", "Multi-Terrain Select"],
+                image: "images/vehicles/toyota-land-cruiser-300.jpg",
+                specs: { engine: "3.5L V6 Twin-Turbo", power: "409 HP", torque: "650 Nm", transmission: "10-Speed Automatic", fuel: "Petrol/Hybrid" }
+            },
+            {
+                id: "car-02",
+                name: "Toyota Hilux",
+                category: "car",
+                price: 45000,
+                description: "Legendary pickup truck known for reliability, durability and versatility in all conditions.",
+                features: ["2.8L Diesel", "4WD", "Towing Package", "Rugged Design", "Advanced Safety"],
+                image: "images/vehicles/toyota-hilux.jpg",
+                specs: { engine: "2.8L Turbo Diesel", power: "204 HP", torque: "500 Nm", transmission: "6-Speed Automatic", fuel: "Diesel" }
+            },
+            {
+                id: "car-03",
+                name: "Toyota RAV4",
+                category: "car",
+                price: 32000,
+                description: "Compact SUV with hybrid option, spacious interior, and advanced safety features for family adventures.",
+                features: ["Hybrid Available", "AWD", "Toyota Safety Sense", "Spacious Cabin", "Apple CarPlay/Android Auto"],
+                image: "images/vehicles/toyota-rav4.jpg",
+                specs: { engine: "2.5L Hybrid/2.5L Petrol", power: "219 HP (Hybrid)", torque: "221 Nm", transmission: "8-Speed CVT", fuel: "Petrol/Hybrid" }
+            },
+            {
+                id: "car-04",
+                name: "Toyota Corolla",
+                category: "car",
+                price: 23000,
+                description: "World's best-selling sedan with hybrid efficiency, modern design, and comprehensive safety features.",
+                features: ["Hybrid Efficiency", "Safety Sense", "Modern Design", "Comfortable Ride", "Good Fuel Economy"],
+                image: "images/vehicles/toyota-corolla.jpg",
+                specs: { engine: "2.0L Hybrid/1.8L Petrol", power: "169 HP", torque: "205 Nm", transmission: "CVT", fuel: "Petrol/Hybrid" }
+            },
+            {
+                id: "car-05",
+                name: "Toyota Landcruiser Prado",
+                category: "car",
+                price: 85000,
+                description: "Premium mid-size SUV with excellent off-road capability and luxurious comfort for long journeys.",
+                features: ["4.0L V6/2.8L Diesel", "Full-Time 4WD", "KDSS Suspension", "Premium Interior", "Multi-Terrain Monitor"],
+                image: "images/vehicles/toyota-landcruiser-prado.jpg",
+                specs: { engine: "4.0L V6/2.8L Diesel", power: "271 HP (V6)", torque: "381 Nm", transmission: "6-Speed Automatic", fuel: "Petrol/Diesel" }
+            },
+            {
+                id: "car-06",
+                name: "Toyota Fortuner",
+                category: "car",
+                price: 55000,
+                description: "Rugged 7-seat SUV built on Hilux platform, offering durability, space and off-road capability.",
+                features: ["2.8L Diesel", "4WD/2WD Options", "7-Seater", "Tough Build", "Advanced Infotainment"],
+                image: "images/vehicles/toyota-fortuner.jpg",
+                specs: { engine: "2.8L Turbo Diesel", power: "204 HP", torque: "500 Nm", transmission: "6-Speed Automatic", fuel: "Diesel" }
+            }
+        ];
+const commercialVehicles = [
+    {
+        id: "vehicle-01",
+        name: "Toyota Hiace Van",
+        category: "vehicle",
+        price: 42000,
+        description: "Versatile passenger and cargo van with spacious interior and reliable performance.",
+        features: ["3.0L Diesel", "15-Seater", "Spacious Cabin", "Commercial Grade", "Durable Build"],
+        image: "images/vehicles/toyota-hiace.jpg",
+        specs: { engine: "3.0L Turbo Diesel", capacity: "15 Passengers", transmission: "6-Speed Manual/Automatic", fuel: "Diesel", warranty: "3 Years/100,000 km" }
+    },
+    {
+        id: "vehicle-02",
+        name: "Toyota Coaster Bus",
+        category: "vehicle",
+        price: 85000,
+        description: "Premium bus for passenger transport with comfortable seating and advanced safety features.",
+        features: ["4.2L Diesel", "30-Seater", "Air Conditioning", "Comfort Seats", "Safety Features"],
+        image: "images/vehicles/toyota-coaster.jpg",
+        specs: { engine: "4.2L Diesel", capacity: "30 Passengers", transmission: "6-Speed Automatic", fuel: "Diesel", warranty: "3 Years/150,000 km" }
+    },
+    {
+        id: "vehicle-03",
+        name: "HINO FC 500",
+        category: "vehicle",
+        price: 55000,
+        description: "Medium-duty truck for cargo transport with excellent payload capacity and reliability.",
+        features: ["4.0L Diesel", "5-Ton Capacity", "Power Steering", "Durable Chassis", "Easy Maintenance"],
+        image: "images/vehicles/hino-fc-500.jpg",
+        specs: { engine: "4.0L Diesel", capacity: "5 Tons", transmission: "5-Speed Manual", fuel: "Diesel", warranty: "2 Years/100,000 km" }
+    },
+    {
+        id: "vehicle-04",
+        name: "Toyota Land Cruiser 79",
+        category: "vehicle",
+        price: 95000,
+        description: "Heavy-duty utility vehicle built for tough conditions and off-road operations.",
+        features: ["4.5L Diesel V8", "4WD", "Utility Vehicle", "Heavy Duty", "Off-Road Capable"],
+        image: "images/vehicles/toyota-landcruiser-79.jpg",
+        specs: { engine: "4.0L Diesel", capacity: "5 Tons", transmission: "5-Speed Manual", fuel: "Diesel", warranty: "2 Years/100,000 km" }
+    },
+    {
+        id: "vehicle-05",
+        name: "Toyota Hilux Double Cab",
+        category: "vehicle",
+        price: 48000,
+        description: "Premium pickup with double cab for passenger comfort and cargo utility.",
+        features: ["2.8L Diesel", "4WD", "Double Cab", "Leather Seats", "Advanced Infotainment"],
+        image: "images/vehicles/toyota-hilux-doublecab.jpg",
+        specs: { engine: "2.8L Turbo Diesel", capacity: "5 Passengers", transmission: "6-Speed Automatic", fuel: "Diesel", warranty: "3 Years/100,000 km" }
+    },
+    {
+        id: "vehicle-06",
+        name: "Toyota Highlander",
+        category: "vehicle",
+        price: 55000,
+        description: "Compact utility vehicle perfect for luxury and cargo transport.",
+        features: ["1.5L Petrol", "Compact Size", "Fuel Efficient", "Spacious Cargo", "Easy to Drive"],
+        image: "images/vehicles/toyota-highlander.jpg",
+        specs: { engine: "2.8 L Petrol", capacity: "5 Passengers", transmission: "7-Speed Manual", fuel: "Petrol", warranty: "2 Years/150,000 km" }
+    }
+];
+
+const spareParts = [
+    {
+        id: "part-engine-01",
+        name: "Toyota Engine Oil Filter",
+        category: "engine",
+        subcategory: "filter",
+        price: 25,
+        description: "Original Toyota oil filter for optimal engine protection and performance.",
+        features: ["Genuine Toyota", "High Filtration", "Easy Installation", "Long Life"],
+        image: "images/parts/toyota-oil-filter.jpg",
+        compatibility: ["All Toyota Models"]
+    },
+    {
+        id: "part-engine-02",
+        name: "Yamaha Air Filter",
+        category: "engine",
+        subcategory: "filter",
+        price: 35,
+        description: "Genuine Yamaha air filter for clean air intake and engine efficiency.",
+        features: ["Genuine Yamaha", "High Airflow", "Washable", "Performance"],
+        image: "images/parts/yamaha-air-filter.jpg",
+        compatibility: ["All Yamaha Motorcycles"]
+    },
+    {
+        id: "part-engine-03",
+        name: "Toyota Spark Plugs",
+        category: "engine",
+        subcategory: "ignition",
+        price: 65,
+        description: "Set of genuine Toyota spark plugs for optimal ignition performance.",
+        features: ["Iridium Tips", "Better Combustion", "Fuel Efficient", "Long Lasting"],
+        image: "images/parts/toyota-spark-plugs.jpg",
+        compatibility: ["Toyota 4-Cylinder Engines"]
+    },
+    {
+        id: "part-engine-04",
+        name: "Toyota Timing Belt Kit",
+        category: "engine",
+        subcategory: "belt",
+        price: 180,
+        description: "Complete timing belt kit with tensioner and idler pulleys.",
+        features: ["Complete Kit", "OE Quality", "Includes Tensioner", "Reliable"],
+        image: "images/parts/toyota-timing-belt.jpg",
+        compatibility: ["Toyota Camry, Corolla, RAV4"]
+    },
+    {
+        id: "part-brake-01",
+        name: "Toyota Brake Pads (Front)",
+        category: "brake",
+        subcategory: "pads",
+        price: 75,
+        description: "Original Toyota brake pads for reliable and consistent braking performance.",
+        features: ["OE Quality", "Low Noise", "Low Dust", "Long Life"],
+        image: "images/parts/toyota-brake-pads.jpg",
+        compatibility: ["Toyota Sedans and SUVs"]
+    },
+    {
+        id: "part-brake-02",
+        name: "Yamaha Brake Pads",
+        category: "brake",
+        subcategory: "pads",
+        price: 45,
+        description: "Original Yamaha brake pads for superior stopping power and durability.",
+        features: ["Genuine Yamaha", "High Friction", "Quick Response", "Durable"],
+        image: "images/parts/yamaha-brake-pads.jpg",
+        compatibility: ["Yamaha Sport Bikes"]
+    },
+    {
+        id: "part-electrical-01",
+        name: "Toyota Battery",
+        category: "electrical",
+        subcategory: "battery",
+        price: 150,
+        description: "Maintenance-free battery designed specifically for Toyota vehicles.",
+        features: ["Maintenance Free", "High CCA", "Long Life", "Warranty"],
+        image: "images/parts/toyota-battery.jpg",
+        compatibility: ["All Toyota Models"]
+    },
+    {
+        id: "part-electrical-02",
+        name: "Yamaha Battery",
+        category: "electrical",
+        subcategory: "battery",
+        price: 85,
+        description: "Maintenance-free battery designed specifically for Yamaha motorcycles.",
+        features: ["Maintenance Free", "High Performance", "Compact", "Reliable"],
+        image: "images/parts/yamaha-battery.jpg",
+        compatibility: ["Yamaha Motorcycles"]
+    },
+    {
+        id: "part-suspension-01",
+        name: "Toyota Shock Absorbers (Front)",
+        category: "suspension",
+        subcategory: "shocks",
+        price: 120,
+        description: "Original Toyota shock absorbers for comfortable ride and handling.",
+        features: ["Gas Charged", "OE Quality", "Comfort Ride", "Durable"],
+        image: "images/parts/toyota-shock-absorbers.jpg",
+        compatibility: ["Toyota Corolla, Camry"]
+    },
+    {
+        id: "part-body-01",
+        name: "Toyota Headlight Assembly",
+        category: "body",
+        subcategory: "lights",
+        price: 280,
+        description: "Original Toyota headlight assembly with bulbs and housing.",
+        features: ["Complete Assembly", "LED Available", "OE Quality", "Easy Installation"],
+        image: "images/parts/toyota-headlight-assembly.jpg",
+        compatibility: ["Toyota Specific Models"]
+    },
+    {
+        id: "part-fluid-01",
+        name: "Toyota Genuine Engine Oil 5W-30",
+        category: "fluid",
+        subcategory: "oil",
+        price: 55,
+        description: "Premium Toyota engine oil for maximum engine protection.",
+        features: ["Synthetic Blend", "5W-30", "4 Liters", "API Certified"],
+        image: "images/parts/toyota-engine-oil.jpg",
+        compatibility: ["All Toyota Models"]
+    },
+    {
+        id: "part-accessory-01",
+        name: "Yamaha Chain & Sprocket Kit",
+        category: "accessory",
+        subcategory: "drive",
+        price: 120,
+        description: "Complete chain and sprocket kit for smooth power transmission.",
+        features: ["Complete Kit", "O-Ring Chain", "Steel Sprockets", "Easy Installation"],
+        image: "images/parts/yamaha-chain-sprocket-kit.jpg",
+        compatibility: ["Yamaha 400-750cc Models"]
+    }
+];
+        // Shopping Cart
+        let cart = JSON.parse(localStorage.getItem('kapeyamaha-cart')) || [];
+
+        // Display functions
+        function displayYamahaBikes(limit = 6) {
+            const container = document.getElementById('bikes-container');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            const bikesToShow = limit === 'all' ? yamahaBikes : yamahaBikes.slice(0, limit);
+            
+            bikesToShow.forEach(bike => {
+                const bikeCard = createProductCard(bike);
+                container.appendChild(bikeCard);
+            });
+        }
+
+        function displayToyotaCars(limit = 6) {
+            const container = document.getElementById('cars-container');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            const carsToShow = limit === 'all' ? toyotaCars : toyotaCars.slice(0, limit);
+            
+            carsToShow.forEach(car => {
+                const carCard = createProductCard(car);
+                container.appendChild(carCard);
+            });
+        }
+
+        function displayCommercialVehicles(limit = 6) {
+            const container = document.getElementById('vehicles-container');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            const vehiclesToShow = limit === 'all' ? commercialVehicles : commercialVehicles.slice(0, limit);
+            
+            vehiclesToShow.forEach(vehicle => {
+                const vehicleCard = createProductCard(vehicle);
+                container.appendChild(vehicleCard);
+            });
+        }
+
+        function displaySpareParts(limit = 12, category = 'all') {
+            const container = document.getElementById('parts-container');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            let partsToShow = category === 'all' ? spareParts : spareParts.filter(part => part.category === category);
+            partsToShow = limit === 'all' ? partsToShow : partsToShow.slice(0, limit);
+            
+            partsToShow.forEach(part => {
+                const partCard = createProductCard(part);
+                container.appendChild(partCard);
+            });
+        }
+
+        function displayFeaturedParts() {
+            const container = document.getElementById('featured-parts-container');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            const featuredParts = [
+                ...spareParts.filter(p => p.category === 'engine').slice(0, 1),
+                ...spareParts.filter(p => p.category === 'brake').slice(0, 1),
+                ...spareParts.filter(p => p.category === 'electrical').slice(0, 1),
+                ...spareParts.filter(p => p.category === 'accessory').slice(0, 1)
+            ];
+            
+            featuredParts.forEach(part => {
+                const partCard = createProductCard(part);
+                container.appendChild(partCard);
+            });
+        }
+
+        function createProductCard(product) {
+            const card = document.createElement('div');
+            card.className = 'bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition duration-300 product-card';
+            card.setAttribute('data-id', product.id);
+            card.setAttribute('data-category', product.category);
+            
+            let badgeText = '';
+            let badgeColor = 'bg-red-600';
+            
+            if (product.category === 'motorbike') {
+                badgeText = 'Yamaha';
+                badgeColor = 'bg-blue-600';
+            } else if (product.category === 'car') {
+                badgeText = 'Toyota';
+                badgeColor = 'bg-red-600';
+            } else if (product.category === 'vehicle') {
+                badgeText = 'Commercial';
+                badgeColor = 'bg-green-600';
+            } else if (product.category === 'engine') {
+                badgeText = 'Engine';
+                badgeColor = 'bg-orange-600';
+            } else if (product.category === 'brake') {
+                badgeText = 'Brake';
+                badgeColor = 'bg-purple-600';
+            } else if (product.category === 'electrical') {
+                badgeText = 'Electrical';
+                badgeColor = 'bg-yellow-600';
+            } else if (product.category === 'suspension') {
+                badgeText = 'Suspension';
+                badgeColor = 'bg-indigo-600';
+            } else if (product.category === 'body') {
+                badgeText = 'Body';
+                badgeColor = 'bg-pink-600';
+            } else if (product.category === 'fluid') {
+                badgeText = 'Fluid';
+                badgeColor = 'bg-teal-600';
+            } else if (product.category === 'accessory') {
+                badgeText = 'Accessory';
+                badgeColor = 'bg-gray-600';
+            } else {
+                badgeText = 'Part';
+                badgeColor = 'bg-gray-600';
+            }
+            
+            card.innerHTML = `
+                <div class="relative">
+                    <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover" 
+                         onerror="this.onerror=null; this.src='https://via.placeholder.com/600x400/333/fff?text=${encodeURIComponent(product.name)}';">
+                    <div class="absolute top-2 right-2 ${badgeColor} text-white px-2 py-1 rounded text-sm">
+                        ${badgeText}
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">${product.name}</h3>
+                    <p class="text-gray-600 text-sm mb-3 line-clamp-2">${product.description}</p>
+                    
+                    ${product.features ? `
+                    <div class="mb-3">
+                        <h4 class="text-sm font-semibold text-gray-700 mb-1">Key Features:</h4>
+                        <div class="flex flex-wrap gap-1">
+                            ${product.features.slice(0, 3).map(feature => 
+                                `<span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">${feature}</span>`
+                            ).join('')}
+                        </div>
+                    </div>
+                    ` : ''}
+                    
+                    ${product.compatibility ? `
+                    <div class="mb-3">
+                        <h4 class="text-sm font-semibold text-gray-700 mb-1">Compatible With:</h4>
+                        <p class="text-xs text-gray-500">${Array.isArray(product.compatibility) ? product.compatibility.join(', ') : product.compatibility}</p>
+                    </div>
+                    ` : ''}
+                    
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <span class="text-2xl font-bold text-red-600">$${product.price.toLocaleString()}</span>
+                            ${product.category === 'car' || product.category === 'vehicle' ? '<span class="text-sm text-gray-500 block">Starting Price</span>' : ''}
+                        </div>
+                        <div class="space-x-2">
+                            <button class="view-details-btn bg-gray-800 hover:bg-gray-900 text-white px-4 py-2 rounded text-sm transition duration-300"
+                                    data-id="${product.id}">
+                                Details
+                            </button>
+                            <button class="add-to-cart-btn bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded text-sm transition duration-300"
+                                    data-id="${product.id}">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        function showProductDetails(productId) {
+            let product;
+            
+            if (productId.startsWith('bike-')) {
+                product = yamahaBikes.find(b => b.id === productId);
+            } else if (productId.startsWith('car-')) {
+                product = toyotaCars.find(c => c.id === productId);
+            } else if (productId.startsWith('vehicle-')) {
+                product = commercialVehicles.find(v => v.id === productId);
+            } else if (productId.startsWith('part-')) {
+                product = spareParts.find(p => p.id === productId);
+            }
+            
+            if (!product) return;
+            
+            const modal = document.getElementById('product-modal');
+            const content = document.getElementById('modal-content');
+            
+            content.innerHTML = `
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div>
+                        <img src="${product.image}" alt="${product.name}" class="w-full rounded-lg">
+                        <div class="mt-4 grid grid-cols-2 gap-2">
+                            ${product.features ? product.features.map(feature => 
+                                `<div class="bg-gray-50 p-2 rounded text-center">
+                                    <span class="text-sm text-gray-700">${feature}</span>
+                                </div>`
+                            ).join('') : ''}
+                        </div>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-2">${product.name}</h2>
+                        <div class="text-3xl font-bold text-red-600 mb-4">$${product.price.toLocaleString()}</div>
+                        <p class="text-gray-600 mb-4">${product.description}</p>
+                        
+                        ${product.specs ? `
+                        <div class="mb-4">
+                            <h3 class="text-lg font-semibold mb-2">Specifications:</h3>
+                            <div class="bg-gray-50 p-4 rounded">
+                                ${Object.entries(product.specs).map(([key, value]) => `
+                                    <div class="flex justify-between py-1 border-b border-gray-200 last:border-0">
+                                        <span class="font-medium">${key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}:</span>
+                                        <span class="text-gray-700">${value}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        ` : ''}
+                        
+                        ${product.compatibility ? `
+                        <div class="mb-4">
+                            <h3 class="text-lg font-semibold mb-2">Compatibility:</h3>
+                            <div class="bg-gray-50 p-3 rounded">
+                                <p class="text-gray-700">${Array.isArray(product.compatibility) ? product.compatibility.join(', ') : product.compatibility}</p>
+                            </div>
+                        </div>
+                        ` : ''}
+                        
+                        <div class="flex space-x-4">
+                            <button class="add-to-cart-detail-btn flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded transition duration-300"
+                                    data-id="${product.id}">
+                                Add to Cart
+                            </button>
+                            <button class="buy-now-btn flex-1 bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-4 rounded transition duration-300"
+                                    data-id="${product.id}">
+                                Buy Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            
+            const addToCartBtn = content.querySelector('.add-to-cart-detail-btn');
+            if (addToCartBtn) {
+                addToCartBtn.addEventListener('click', () => {
+                    addToCart(product.id);
+                    showNotification(`Added ${product.name} to cart!`);
+                });
+            }
+            
+            const buyNowBtn = content.querySelector('.buy-now-btn');
+            if (buyNowBtn) {
+                buyNowBtn.addEventListener('click', () => {
+                    addToCart(product.id);
+                    document.getElementById('product-modal').style.display = 'none';
+                    document.getElementById('cart-preview').style.display = 'none';
+                    document.getElementById('checkout-modal').style.display = 'flex';
+                    updateCheckoutSummary();
+                });
+            }
+        }
+
+        // Cart Functions
+        function addToCart(productId) {
+            let product;
+            
+            if (productId.startsWith('bike-')) {
+                product = yamahaBikes.find(b => b.id === productId);
+            } else if (productId.startsWith('car-')) {
+                product = toyotaCars.find(c => c.id === productId);
+            } else if (productId.startsWith('vehicle-')) {
+                product = commercialVehicles.find(v => v.id === productId);
+            } else if (productId.startsWith('part-')) {
+                product = spareParts.find(p => p.id === productId);
+            }
+            
+            if (!product) return;
+            
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    quantity: 1,
+                    category: product.category,
+                    image: product.image
+                });
+            }
+            
+            saveCart();
+            updateCartCount();
+            showNotification(`Added ${product.name} to cart!`);
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            saveCart();
+            updateCartCount();
+            updateCartPreview();
+        }
+
+        function updateCartCount() {
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cart-count').textContent = count;
+        }
+
+        function updateCartPreview() {
+            const container = document.getElementById('cart-items');
+            const itemsCount = document.getElementById('cart-items-count');
+            const total = document.getElementById('cart-total');
+            
+            if (cart.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-center py-4">Your cart is empty</p>';
+                itemsCount.textContent = '0';
+                total.textContent = '$0.00';
+                return;
+            }
+            
+            container.innerHTML = '';
+            let totalPrice = 0;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                totalPrice += itemTotal;
+                
+                const cartItem = document.createElement('div');
+                cartItem.className = 'flex items-center justify-between py-3 border-b';
+                cartItem.innerHTML = `
+                    <div class="flex items-center">
+                        <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-cover rounded">
+                        <div class="ml-3">
+                            <h4 class="font-medium text-sm">${item.name}</h4>
+                            <p class="text-red-600 font-bold">$${item.price.toLocaleString()} × ${item.quantity}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button class="remove-item text-gray-500 hover:text-red-600" data-id="${item.id}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(cartItem);
+            });
+            
+            itemsCount.textContent = cart.reduce((total, item) => total + item.quantity, 0);
+            total.textContent = `$${totalPrice.toLocaleString()}`;
+            
+            container.querySelectorAll('.remove-item').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const productId = e.target.closest('button').getAttribute('data-id');
+                    removeFromCart(productId);
+                });
+            });
+        }
+
+        function updateCheckoutSummary() {
+            const checkoutItems = document.getElementById('checkout-items');
+            const subtotalEl = document.getElementById('checkout-subtotal');
+            const shippingEl = document.getElementById('checkout-shipping');
+            const taxEl = document.getElementById('checkout-tax');
+            const totalEl = document.getElementById('checkout-total');
+            
+            let subtotal = 0;
+            checkoutItems.innerHTML = '';
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                
+                const itemEl = document.createElement('div');
+                itemEl.className = 'flex justify-between py-2 border-b';
+                itemEl.innerHTML = `
+                    <span>${item.name} × ${item.quantity}</span>
+                    <span>$${itemTotal.toLocaleString()}</span>
+                `;
+                checkoutItems.appendChild(itemEl);
+            });
+            
+            const shipping = 50.00;
+            const tax = subtotal * 0.08;
+            const total = subtotal + shipping + tax;
+            
+            subtotalEl.textContent = `$${subtotal.toLocaleString()}`;
+            shippingEl.textContent = `$${shipping.toLocaleString()}`;
+            taxEl.textContent = `$${tax.toFixed(2)}`;
+            totalEl.textContent = `$${total.toFixed(2)}`;
+        }
+
+        function saveCart() {
+            localStorage.setItem('kapeyamaha-cart', JSON.stringify(cart));
+        }
+
+        function loadCart() {
+            const savedCart = localStorage.getItem('kapeyamaha-cart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+            }
+            updateCartCount();
+        }
+
+        // Notification function
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            if (!notification) return;
+            
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        // Initialize the website
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCart();
+            displayYamahaBikes();
+            displayToyotaCars();
+            displayCommercialVehicles();
+            displaySpareParts();
+            displayFeaturedParts();
+            
+            // Event delegation
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('view-details-btn') || 
+                    e.target.closest('.view-details-btn')) {
+                    const button = e.target.closest('.view-details-btn');
+                    const productId = button.getAttribute('data-id');
+                    showProductDetails(productId);
+                }
+                
+                if (e.target.classList.contains('add-to-cart-btn') || 
+                    e.target.closest('.add-to-cart-btn')) {
+                    const button = e.target.closest('.add-to-cart-btn');
+                    const productId = button.getAttribute('data-id');
+                    addToCart(productId);
+                }
+            });
+            
+            // Category filter buttons
+            document.querySelectorAll('.category-filter-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    
+                    document.querySelectorAll('.category-filter-btn').forEach(btn => {
+                        btn.classList.remove('bg-red-600', 'text-white');
+                        btn.classList.add('bg-white', 'text-gray-800');
+                    });
+                    
+                    this.classList.remove('bg-white', 'text-gray-800');
+                    this.classList.add('bg-red-600', 'text-white');
+                    
+                    displaySpareParts(12, category);
+                });
+            });
+            
+            // Load more buttons
+            document.getElementById('load-more-bikes')?.addEventListener('click', () => {
+                displayYamahaBikes('all');
+                document.getElementById('load-more-bikes').style.display = 'none';
+            });
+            
+            document.getElementById('load-more-cars')?.addEventListener('click', () => {
+                displayToyotaCars('all');
+                document.getElementById('load-more-cars').style.display = 'none';
+            });
+            
+            document.getElementById('load-more-vehicles')?.addEventListener('click', () => {
+                displayCommercialVehicles('all');
+                document.getElementById('load-more-vehicles').style.display = 'none';
+            });
+            
+            document.getElementById('load-more-parts')?.addEventListener('click', () => {
+                displaySpareParts('all');
+                document.getElementById('load-more-parts').style.display = 'none';
+            });
+            
+            // Cart functionality
+            document.getElementById('cart-icon')?.addEventListener('click', () => {
+                updateCartPreview();
+                document.getElementById('cart-preview').style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            });
+            
+            document.querySelector('.close-cart')?.addEventListener('click', () => {
+                document.getElementById('cart-preview').style.display = 'none';
+                document.body.style.overflow = 'auto';
+            });
+            
+            window.addEventListener('click', (e) => {
+                if (e.target === document.getElementById('cart-preview')) {
+                    document.getElementById('cart-preview').style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+            
+            // Checkout button
+            document.getElementById('checkout-btn')?.addEventListener('click', () => {
+                if (cart.length === 0) {
+                    showNotification('Your cart is empty!', 'error');
+                    return;
+                }
+                
+                document.getElementById('cart-preview').style.display = 'none';
+                document.body.style.overflow = 'auto';
+                updateCheckoutSummary();
+                document.getElementById('checkout-modal').style.display = 'flex';
+            });
+            
+            // Set default active category filter
+            const allCategoryBtn = document.querySelector('.category-filter-btn[data-category="all"]');
+            if (allCategoryBtn) {
+                allCategoryBtn.classList.remove('bg-white', 'text-gray-800');
+                allCategoryBtn.classList.add('bg-red-600', 'text-white');
+            }
+            
+            // Modal close functionality
+            document.querySelectorAll('.close-modal').forEach(button => {
+                button.addEventListener('click', function() {
+                    this.closest('.modal').style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                });
+            });
+            
+            window.addEventListener('click', (e) => {
+                if (e.target.classList.contains('modal')) {
+                    e.target.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+            
+            // Mobile menu toggle
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (menuToggle && mobileMenu) {
+                menuToggle.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+            
+            // Smooth scrolling
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                            mobileMenu.classList.add('hidden');
+                        }
+                        
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Contact form
+            const contactForm = document.getElementById('contact-form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const name = document.getElementById('contact-name').value;
+                    const email = document.getElementById('contact-email').value;
+                    const phone = document.getElementById('contact-phone').value;
+                    const subject = document.getElementById('contact-subject').value;
+                    
+                    showNotification(`Thank you for your message, ${name}! We will contact you at ${email} or ${phone} regarding your ${subject} inquiry.`);
+                    
+                    contactForm.reset();
+                });
+            }
+            
+            // Newsletter form
+            const newsletterForm = document.getElementById('newsletter-form');
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const email = document.getElementById('newsletter-email').value;
+                    showNotification(`Thank you for subscribing with ${email}! You will receive updates from KAPEYAMAHA.`);
+                    
+                    newsletterForm.reset();
+                });
+            }
+            
+            // Set current year
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+        });
+    </script>
+    
+    <!-- Payment Functions -->
+    <script>
+        // Payment modal functions
+        function closePaymentSuccessModal() {
+            document.getElementById('payment-success-modal').style.display = 'none';
+        }
+
+        function printReceipt() {
+            window.print();
+        }
+
+        function showPaymentSuccessModal() {
+            document.getElementById('payment-success-modal').style.display = 'flex';
+        }
+
+        function showManualPaymentInstructions() {
+            alert("Bank Transfer Instructions:\n\n" +
+                  "Bank: Kenya Commercial Bank-KCB \n" +
+                  "Account Name: KAPEYAMAHA ENTERPRISES LTD\n" +
+                  "Account Number: 1234567890\n" +
+                  "Branch: Kapenguria\n" +
+                  "SWIFT Code: KCBLKENX\n\n" +
+                  "Please use your order number as reference.");
+        }
+
+        // Event listeners for payment buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            const manualPaymentBtn = document.getElementById('manual-payment-btn');
+            if (manualPaymentBtn) {
+                manualPaymentBtn.addEventListener('click', function() {
+                    showManualPaymentInstructions();
+                });
+            }
+            
+            const mpesaPaymentBtn = document.getElementById('mpesa-payment-btn');
+            if (mpesaPaymentBtn) {
+                mpesaPaymentBtn.addEventListener('click', function() {
+                    alert("M-Pesa payment option is coming soon. Currently, please use PayPal or bank transfer.");
+                });
+            }
+        });
+    </script>
+</body>
+</html>
