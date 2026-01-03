@@ -1,6 +1,12 @@
 {
   "functions": {},
-  "buildCommand": "npm run build",
-  "outputDirectory": ".next",
-  "framework": "nextjs"
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next"
+    }
+  ],
+  "env": {
+    "VERCEL_NO_FUNCTIONS": "true"
+  }
 }
