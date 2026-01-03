@@ -1,18 +1,25 @@
-{
+﻿{
   "name": "kapeyamaha-web",
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
     "start": "node server.js",
-    "kill-all": "taskkill /f /im node.exe 2>nul",
-    "fresh": "npm run kill-all && npm run dev"
+    "kill-port": "npx kill-port 5000 3000 3001",
+    "test": "echo \"No tests specified\" && exit 0"
   },
   "dependencies": {
     "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "helmet": "^7.0.0",
+    "morgan": "^1.10.0",
+    "nodemailer": "^6.9.8",
     "dotenv": "^16.0.3"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
-  }
+  },
+  "keywords": ["kapeyamaha", "motorcycles"],
+  "author": "",
+  "license": "ISC"
 }
