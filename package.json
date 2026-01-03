@@ -19,5 +19,6 @@
     "tailwindcss": "^3.0.0",
     "eslint": "^8.0.0",
     "eslint-config-next": "^14.0.0"
-  }
+  },
+  "_comment": "Cache bust: 2026-01-03T10:09:17.122Z"
 }
