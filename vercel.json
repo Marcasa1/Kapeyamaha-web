@@ -1,19 +1,18 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "server.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "server.js"
+  "functions": {
+    "routes/api/**": {
+      "memory": 1024,
+      "maxDuration": 10
     },
+    "routes/routes/api/**": {
+      "memory": 1024,
+      "maxDuration": 10
+    }
+  },
+  "rewrites": [
     {
-      "src": "/(.*)",
-      "dest": "server.js"
+      "source": "/api/:path*",
+      "destination": "https://your-api.com/:path*"
     }
   ]
 }
