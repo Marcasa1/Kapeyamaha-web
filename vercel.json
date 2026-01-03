@@ -1,18 +1,16 @@
 {
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next"
+    }
+  ],
   "functions": {
-    "routes/api/**": {
-      "memory": 1024,
+    "app/api/**": {
       "maxDuration": 10
     },
-    "routes/routes/api/**": {
-      "memory": 1024,
+    "pages/api/**": {
       "maxDuration": 10
     }
-  },
-  "rewrites": [
-    {
-      "source": "/api/:path*",
-      "destination": "https://your-api.com/:path*"
-    }
-  ]
+  }
 }
