@@ -1,12 +1,14 @@
 {
-  "functions": {},
+  "version": 2,
   "builds": [
     {
       "src": "package.json",
       "use": "@vercel/next"
     }
   ],
-  "env": {
-    "VERCEL_NO_FUNCTIONS": "true"
+  "functions": {
+    "app/api/**": {
+      "maxDuration": 10
+    }
   }
 }
