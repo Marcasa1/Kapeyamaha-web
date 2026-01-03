@@ -1,14 +1,14 @@
 {
-  "version": 2,
+  "functions": {
+    "routes/api/**": {
+      "memory": 1024,
+      "maxDuration": 10
+    }
+  },
   "builds": [
     {
       "src": "package.json",
       "use": "@vercel/next"
     }
-  ],
-  "functions": {
-    "app/api/**": {
-      "maxDuration": 10
-    }
-  }
+  ]
 }
