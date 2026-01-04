@@ -1,23 +1,38 @@
-# KAPEYAMAHA LIMITED Website
+# KAPEYAMAHA ENTERPRISES Website
 
-E-commerce website for Toyota Cars, Yamaha Motorbikes, Commercial Vehicles & Genuine Spare Parts.
+Your Complete Automotive Solution - Premium Toyota Cars, Yamaha Motorbikes, Commercial Vehicles & Genuine Spare Parts
 
 ## Features
-- Product catalog with Toyota cars, Yamaha bikes, commercial vehicles, and spare parts
-- Shopping cart functionality
-- Multiple payment options (PayPal, Stripe, Bank Transfer)
-- Contact form and WhatsApp integration
+- Responsive design (works on mobile & desktop)
+- Toyota car catalog
+- Yamaha bike collection
+- Contact form
+- WhatsApp integration
 - FAQ section
-- Responsive design
+- Newsletter subscription
 
-## Deployment Instructions
+## Live Demo
+The website is deployed and accessible online.
 
-### Prerequisites
-- Node.js (v14 or higher)
-- npm or yarn
+## Contact Information
+- **Address:** Kapeyamaha Enterprises Limited, Kitale-Lodwar Highway, Kapenguria, Kenya
+- **Phone/WhatsApp:** +254 758 772 539
+- **Email:** kapeyamaha@gmail.com
 
-### Local Development
+## Technologies Used
+- HTML5
+- Tailwind CSS
+- JavaScript
+- Font Awesome Icons
+
+## Deployment
+This website can be deployed on:
+- Vercel (recommended)
+- GitHub Pages
+- Netlify
+- Any static hosting service
+
+## Setup
 1. Clone the repository
-2. Install dependencies:
-   ```bash
-   npm install
+2. Open `index.html` in any browser
+3. No build process required

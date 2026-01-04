@@ -1,3 +1,4 @@
-routes/
-my-app/
-*.tmp
+node_modules
+.git
+.env
+*.log
