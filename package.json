@@ -1,0 +1,9 @@
+{
+  "name": "kapeyamaha-web",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "echo 'No dev server'",
+    "build": "echo 'No build needed'",
+    "start": "echo 'Static site'"
+  }
+}
