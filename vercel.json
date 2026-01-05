@@ -1,6 +1,8 @@
 {
-  "version": 2,
-  "github": {
-    "silent": true
-  }
+  "buildCommand": null,
+  "outputDirectory": ".",
+  "framework": null,
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
 }
