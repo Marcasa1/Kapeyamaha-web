@@ -1,19 +1,15 @@
-{
+﻿{
   "name": "kapeyamaha-web",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0",
+  "description": "KAPEYAMAHA ENTERPRISES LIMITED - Toyota Cars, Yamaha Bikes, Vehicles & Spare Parts",
+  "main": "index.html",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "next": "14.2.21",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "build": "echo 'Static HTML website - no build required' && exit 0"
   },
   "engines": {
-    "node": ">=18.0.0"
-  }
+    "node": ">=18"
+  },
+  "keywords": ["toyota", "yamaha", "cars", "bikes", "vehicles", "spare-parts"],
+  "author": "KAPEYAMAHA ENTERPRISES LIMITED",
+  "license": "UNLICENSED"
 }

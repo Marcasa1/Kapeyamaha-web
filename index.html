@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -1263,6 +1263,47 @@
     <!-- Scripts -->
     <script src="https://js.stripe.com/v3/"></script>
     <script>
+        // Image Path Fix Function - This will handle broken images
+        function fixImagePaths() {
+            document.querySelectorAll('img').forEach(img => {
+                const originalSrc = img.src || img.getAttribute('src');
+                img.onerror = function() {
+                    // Replace with placeholder based on alt text or category
+                    const altText = img.alt || 'Product Image';
+                    const productCard = img.closest('.product-card');
+                    const category = productCard ? (productCard.dataset?.category || 'default') : 'default';
+                    const colors = {
+                        'motorbike': '3B82F6',
+                        'car': 'EF4444',
+                        'vehicle': '10B981',
+                        'engine': 'F59E0B',
+                        'brake': '8B5CF6',
+                        'electrical': 'F59E0B',
+                        'suspension': 'EC4899',
+                        'body': '6366F1',
+                        'fluid': '14B8A6',
+                        'accessory': '6B7280',
+                        'default': '6B7280'
+                    };
+                    
+                    const color = colors[category] || colors.default;
+                    const text = altText.substring(0, 30).replace(/\s+/g, '+');
+                    this.src = `https://via.placeholder.com/600x400/${color}/FFFFFF?text=${text}`;
+                    this.onerror = null; // Prevent infinite loop
+                };
+                
+                // Check if image exists
+                if (originalSrc && !originalSrc.includes('placeholder.com') && !originalSrc.includes('http')) {
+                    // If it's a local path that doesn't exist, trigger error
+                    const testImage = new Image();
+                    testImage.onerror = () => {
+                        img.src = '';
+                    };
+                    testImage.src = originalSrc;
+                }
+            });
+        }
+
         // FAQ Toggle Function
         function toggleFAQ(element) {
             const faqItem = element.closest('.faq-item');
@@ -1281,7 +1322,7 @@
             });
         }
 
-        // Products data
+        // Products data (ORIGINAL - keeping your existing image paths)
         const yamahaBikes = [
             {
                 id: "bike-01",
@@ -1290,7 +1331,7 @@
                 price: 15999,
                 description: "Superbike with 998cc crossplane engine, advanced electronics, and aerodynamic design for track and street.",
                 features: ["998cc Engine", "200 HP", "Quick Shifter", "LED Lighting", "TFT Display"],
-                image: "public/images/vehicles/yamaha-yzf-r1.jpg",
+                image: "images/vehicles/yamaha-yzf-r1.jpg",
                 specs: { engine: "998cc Liquid-cooled", power: "200 HP", torque: "113 Nm", weight: "201 kg", fuelCapacity: "17L" }
             },
             {
@@ -1353,7 +1394,7 @@
                 price: 125000,
                 description: "Flagship luxury SUV with 3.5L twin-turbo V6 engine, unmatched off-road capability and premium interior.",
                 features: ["3.5L V6 Twin-Turbo", "4WD", "Advanced Safety", "Luxury Interior", "Multi-Terrain Select"],
-                image: "images/vehicles/toyota-land-cruiser-300.jpg",
+                image: "images/vehicles/toyota-land-cruiser-300-2023.jpg",
                 specs: { engine: "3.5L V6 Twin-Turbo", power: "409 HP", torque: "650 Nm", transmission: "10-Speed Automatic", fuel: "Petrol/Hybrid" }
             },
             {
@@ -2036,6 +2077,9 @@ const spareParts = [
             displayCommercialVehicles();
             displaySpareParts();
             displayFeaturedParts();
+            
+            // Call fixImagePaths after a short delay to ensure all images are loaded
+            setTimeout(fixImagePaths, 500);
             
             // Event delegation
             document.addEventListener('click', function(e) {
