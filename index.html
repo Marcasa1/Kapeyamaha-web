@@ -95,11 +95,138 @@
             color: #ef4444;
         }
 
-        .hero-bg {
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
-                        url(images/hero/background.jpg);
+        .hero-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .hero-slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background-size: cover;
             background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0;
+            animation: heroSlider 20s infinite;
+        }
+
+        .slide:nth-child(1) {
+            background-image: url(images/hero/Toyota-fortuner.jpg);
+            animation-delay: 0s;
+        }
+
+        .slide:nth-child(2) {
+            background-image: url(images/hero/toyota-RSA.jpg);
+            animation-delay: 5s;
+        }
+
+        .slide:nth-child(3) {
+            background-image: url(images/hero/TOYOTA-LANDCRUISER-GDJ.jpg);
+            animation-delay: 10s;
+        }
+
+        .slide:nth-child(4) {
+            background-image: url(images/hero/toyota-landcruiser-prado.jpg);
+            animation-delay: 15s;
+        }
+
+        @keyframes heroSlider {
+            0%, 20% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            25%, 100% {
+                opacity: 0;
+                transform: scale(1.1);
+            }
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.5));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        @media (max-width: 768px) {
+            .hero-container {
+                height: 80vh;
+            }
+            
+            .slide {
+                animation-duration: 24s;
+            }
+            
+            .modal-content {
+                width: 95%;
+                margin: 20px;
+            }
+            
+            .cart-preview {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+                font-size: 24px;
+            }
+
+            .whatsapp-float i {
+                margin-top: 13px;
+            }
+        }
+
+        .hero-container:hover .slide {
+            animation-play-state: paused;
+        }
+
+        .slider-dots {
+            position: absolute;
+            bottom: 30px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            z-index: 3;
+        }
+
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .slider-dot.active {
+            background: #ef4444;
+            transform: scale(1.2);
         }
 
         .spinner {
@@ -144,7 +271,6 @@
             scroll-behavior: smooth;
         }
 
-        /* WhatsApp Floating Button */
         .whatsapp-float {
             position: fixed;
             width: 60px;
@@ -212,30 +338,6 @@
         .faq-answer.open {
             padding: 20px;
             max-height: 500px;
-        }
-
-        @media (max-width: 768px) {
-            .modal-content {
-                width: 95%;
-                margin: 20px;
-            }
-            
-            .cart-preview {
-                width: 100%;
-                max-width: 100%;
-            }
-
-            .whatsapp-float {
-                width: 50px;
-                height: 50px;
-                bottom: 20px;
-                right: 20px;
-                font-size: 24px;
-            }
-
-            .whatsapp-float i {
-                margin-top: 13px;
-            }
         }
     </style>
     <!-- PayPal SDK -->
@@ -456,23 +558,44 @@
         </div>
     </div>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero-bg text-white py-20 md:py-32">
-        <div class="container mx-auto px-4 text-center">
-            <h1 class="text-4xl md:text-6xl font-bold mb-6">Your Complete Automotive Solution</h1>
-            <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
-                Premium Toyota Cars, Yamaha Motorbikes, Commercial Vehicles & Genuine Spare Parts
-            </p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="#cars" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
-                    Browse Toyota Cars
-                </a>
-                <a href="#spare-parts" class="bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
-                    Shop Spare Parts
-                </a>
-            </div>
+    
+    <!-- Hero Section with Sliding Background -->
+<section id="home" class="hero-container">
+    <!-- Background Image Slider -->
+    <div class="hero-slider">
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+    </div>
+    
+    <!-- Gradient Overlay -->
+    <div class="hero-overlay"></div>
+    
+    <!-- Navigation Dots (Optional) -->
+    <div class="slider-dots">
+        <div class="slider-dot active" data-slide="0"></div>
+        <div class="slider-dot" data-slide="1"></div>
+        <div class="slider-dot" data-slide="2"></div>
+        <div class="slider-dot" data-slide="3"></div>
+    </div>
+    
+    <!-- Hero Content -->
+    <div class="hero-content container mx-auto px-4 h-full flex flex-col justify-center items-center text-center">
+        <h1 class="text-4xl md:text-6xl font-bold mb-6 text-white">Your Complete Automotive Solution</h1>
+        <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-white">
+            Premium Toyota Cars, Yamaha Motorbikes, Commercial Vehicles & Genuine Spare Parts
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="#cars" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105">
+                Browse Toyota Cars
+            </a>
+            <a href="#spare-parts" class="bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105">
+                Shop Spare Parts
+            </a>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Quick Categories -->
     <section class="bg-white py-12">
