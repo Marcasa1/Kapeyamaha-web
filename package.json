@@ -1,13 +1,5 @@
 {
-  "name": "kapeyamaha-website",
-  "version": "1.0.0",
-  "description": "KAPEYAMAHA LIMITED - Toyota Cars, Vehicles & Spare Parts",
   "scripts": {
-    "dev": "echo 'Static HTML site - no dev server needed'",
-    "build": "echo 'Static site - no build needed'",
-    "start": "echo 'Static site - deploy to Vercel'"
-  },
-  "keywords": ["toyota", "yamaha", "automotive", "cars", "motorcycles"],
-  "author": "KAPEYAMAHA LIMITED",
-  "license": "MIT"
+    "build": "mkdir -p public && echo 'Build complete'"
+  }
 }
