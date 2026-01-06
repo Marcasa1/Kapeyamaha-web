@@ -1,3 +1,12 @@
+#!/bin/bash
+
+echo "=== Quick Deploy to Vercel ==="
+
+# Create minimal files
+echo "Creating deployment files..."
+
+# Create a simple index.html that works
+cat > index.html << 'HTML'
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -85,3 +94,16 @@
     </div>
 </body>
 </html>
+HTML
+
+echo "Deployment ready! Files created:"
+ls -la
+
+echo ""
+echo "=== TO DEPLOY ==="
+echo "1. Go to https://vercel.com"
+echo "2. Click 'New Project'"
+echo "3. Drag & drop this folder"
+echo "4. Click 'Deploy'"
+echo ""
+echo "Or use CLI: npm i -g vercel && vercel"
