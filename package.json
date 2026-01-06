@@ -1,7 +1,20 @@
 {
-  "name": "your-static-site",
+  "name": "kapeyamaha-limited",
   "version": "1.0.0",
+  "description": "KAPEYAMAHA ENTERPRISES LIMITED - Toyota Cars, Yamaha Bikes, Commercial Vehicles & Spare Parts",
+  "main": "index.html",
   "scripts": {
-    "build": "echo 'Static site - no build required'"
-  }
+    "dev": "serve .",
+    "start": "serve .",
+    "build": "echo 'Build complete'"
+  },
+  "dependencies": {
+    "serve": "^14.0.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "author": "KAPEYAMAHA ENTERPRISES LIMITED",
+  "license": "MIT"
 }
