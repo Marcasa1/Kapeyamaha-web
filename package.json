@@ -4,6 +4,11 @@
   "description": "KAPEYAMAHA LIMITED Automotive Website",
   "main": "index.html",
   "scripts": {
-    "start": "echo 'Static site deployed'"
+    "dev": "serve .",
+    "build": "echo 'Static site build complete'",
+    "start": "serve ."
+  },
+  "devDependencies": {
+    "serve": "^14.0.0"
   }
 }
