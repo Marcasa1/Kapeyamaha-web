@@ -95,139 +95,132 @@
             color: #ef4444;
         }
 
-        .hero-container {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            overflow: hidden;
-        }
+.hero-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
 
-        .hero-slider {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
+.hero-slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
 
-        .slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            opacity: 0;
-            animation: heroSlider 20s infinite;
-        }
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    animation: heroSlider 20s infinite;
+}
 
-        .slide:nth-child(1) {
-            background-image: url('images/hero/Toyota-fortuner.jpg');
-            animation-delay: 0s;
-        }
+.slide:nth-child(1) {
+    background-image: url(images/hero/Toyota-fortuner.jpg);
+    animation-delay: 0s;
+}
 
-        .slide:nth-child(2) {
-            background-image: url('images/hero/toyota-RSA.jpg');
-            animation-delay: 5s;
-        }
+.slide:nth-child(2) {
+    background-image: url(images/hero/TOYOTA-LANDCRUISER-GDJ.jpg);
+    animation-delay: 5s;
+}
 
-        .slide:nth-child(3) {
-            background-image: url('images/hero/toyota-landcruiser-prado.jpg');
-            animation-delay: 10s;
-        }
+.slide:nth-child(3) {
+    background-image: url(images/hero/toyota-landcruiser-prado.jpg);
+    animation-delay: 10s;
+}
 
-        .slide:nth-child(4) {
-            background-image: url('images/hero/TOYOTA-LANDCRUISER-GDJ.jpg');
-            animation-delay: 15s;
-        }
+.slide:nth-child(4) {
+    background-image: url(images/hero/toyota-RSA.jpg);
+    animation-delay: 15s;
+}
 
-        @keyframes heroSlider {
-            0%, 20% {
-                opacity: 1;
-                transform: scale(1);
-            }
-            25%, 100% {
-                opacity: 0;
-                transform: scale(1.1);
-            }
-        }
+@keyframes heroSlider {
+    0%, 20% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    25%, 100% {
+        opacity: 0;
+        transform: scale(1.1);
+    }
+}
 
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.5));
-        }
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.5));
+}
 
-        .hero-content {
-            position: relative;
-            z-index: 2;
-        }
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
 
-        @media (max-width: 768px) {
-            .hero-container {
-                height: 80vh;
-            }
-            
-            .slide {
-                animation-duration: 24s;
-            }
-            
-            .modal-content {
-                width: 95%;
-                margin: 20px;
-            }
-            
-            .cart-preview {
-                width: 100%;
-                max-width: 100%;
-            }
+.hero-slider.fade-only .slide {
+    animation: fadeSlider 20s infinite;
+}
 
-            .whatsapp-float {
-                width: 50px;
-                height: 50px;
-                bottom: 20px;
-                right: 20px;
-                font-size: 24px;
-            }
+@keyframes fadeSlider {
+    0%, 20% {
+        opacity: 1;
+    }
+    25%, 100% {
+        opacity: 0;
+    }
+}
 
-            .whatsapp-float i {
-                margin-top: 13px;
-            }
-        }
+@media (max-width: 768px) {
+    .hero-container {
+        height: 80vh;
+    }
+    
+    .slide {
+        animation-duration: 24s;
+    }
+}
 
-        .hero-container:hover .slide {
-            animation-play-state: paused;
-        }
+.hero-container:hover .slide {
+    animation-play-state: paused;
+}
 
-        .slider-dots {
-            position: absolute;
-            bottom: 30px;
-            left: 0;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            z-index: 3;
-        }
+.slider-dots {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    z-index: 3;
+}
 
-        .slider-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.5);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
+.slider-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
 
-        .slider-dot.active {
-            background: #ef4444;
-            transform: scale(1.2);
-        }
+.slider-dot.active {
+    background: #ef4444;
+    transform: scale(1.2);
+}
+
+        
 
         .spinner {
             border: 3px solid #f3f3f3;
@@ -339,15 +332,39 @@
             padding: 20px;
             max-height: 500px;
         }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                width: 95%;
+                margin: 20px;
+            }
+            
+            .cart-preview {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+                font-size: 24px;
+            }
+
+            .whatsapp-float i {
+                margin-top: 13px;
+            }
+        }
     </style>
-    <!-- PayPal SDK - FIXED -->
+    <!-- PayPal SDK -->
     <script src="https://www.paypal.com/sdk/js?client-id=AYABQwMlBq4cAQ2gMwWg84K4Ctr5AYq9qJnJcwMfqQOXGqCQrUyY3xVDgE-U6eTmfOXd8q8XMf0BuFpR&currency=USD"></script>
 </head>
 <body class="font-sans bg-gray-100">
     <!-- WhatsApp Floating Button -->
     <a href="https://wa.me/254758772539?text=Hello%20KAPEYAMAHA%20LIMITED,%20I%20have%20a%20question%20about%20your%20products" 
-       class="whatsapp-float" 
-       target="_blank"> 
+   class="whatsapp-float" 
+   target="_blank"> 
         <i class="fab fa-whatsapp"></i>
     </a>
 
@@ -367,6 +384,7 @@
                 <a href="#cars" class="nav-link text-gray-800 font-medium">Toyota Cars</a>
                 <a href="#vehicles" class="nav-link text-gray-800 font-medium">Commercial Vehicles</a>
                 <a href="#spare-parts" class="nav-link text-gray-800 font-medium">Spare Parts</a>
+                <a href="#brochures" class="nav-link text-gray-800 font-medium">Brochures</a>
                 <a href="#faq" class="nav-link text-gray-800 font-medium">Q&A</a>
                 <a href="#contact" class="nav-link text-gray-800 font-medium">Contact</a>
             </nav>
@@ -390,6 +408,7 @@
             <a href="#cars" class="block py-2 text-gray-800">Toyota Cars</a>
             <a href="#vehicles" class="block py-2 text-gray-800">Commercial Vehicles</a>
             <a href="#spare-parts" class="block py-2 text-gray-800">Spare Parts</a>
+            <a href="#brochures" class="block py-2 text-gray-800">Brochures</a>
             <a href="#faq" class="block py-2 text-gray-800">Q&A</a>
             <a href="#contact" class="block py-2 text-gray-800">Contact</a>
         </div>
@@ -1063,6 +1082,299 @@
         </div>
     </section>
 
+    <!-- Brochures Section -->
+    <section id="brochures" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Download Our Brochures</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Explore our complete range of products and services through our detailed brochures</p>
+                <div class="w-24 h-1 bg-red-600 mx-auto mt-4"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Brochure 1: Toyota Cars -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition duration-300 transform hover:-translate-y-1">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="images/vehicles/toyota-fortuner.jpg" 
+                             alt="Toyota Cars Brochure" 
+                             class="w-full h-full object-cover transition duration-500 hover:scale-110">
+                        <div class="absolute top-4 left-4 bg-red-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                            Toyota
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Toyota Vehicle Collection 2024</h3>
+                        <p class="text-gray-600 mb-4">Complete catalog of Toyota cars, SUVs, and pickups available in Kenya with specifications and pricing.</p>
+                        <div class="mb-4">
+                            <div class="flex items-center text-sm text-gray-500 mb-1">
+                                <i class="fas fa-file-pdf text-red-600 mr-2"></i>
+                                <span>BRONCHURES/Toyota-Land-Cruiser-Prado-2022-BN.pdf,BRONCHURES/toyotahilux_brochure.pdf,BRONCHURES/Toyota-Hilux-Double-Cab-2024-ZA.pdf</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-500 mb-1">
+                                <i class="fas fa-file-alt text-red-600 mr-2"></i>
+                                <span>Pages: 48 pages</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <i class="fas fa-weight text-red-600 mr-2"></i>
+                                <span>Size: 8.5 MB</span>
+                            </div>
+                        </div>
+                        <div class="flex space-x-3">
+                            <a href="#" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center text-center">
+                                <i class="fas fa-download mr-2"></i> Download
+                            </a>
+                            <a href="#" class="flex-1 bg-gray-800 hover:bg-gray-900 text-white font-medium py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center text-center">
+                                <i class="fas fa-eye mr-2"></i> Preview
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Brochure 2: Yamaha Bikes -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition duration-300 transform hover:-translate-y-1">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="images/vehicles/yamaha-mt-07.jpg" 
+                             alt="Yamaha Bikes Brochure" 
+                             class="w-full h-full object-cover transition duration-500 hover:scale-110">
+                        <div class="absolute top-4 left-4 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                            Yamaha
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Yamaha Motorcycle Range</h3>
+                        <p class="text-gray-600 mb-4">Explore our full Yamaha motorcycle lineup including sports, commuter, and adventure bikes.</p>
+                        <div class="mb-4">
+                            <div class="flex items-center text-sm text-gray-500 mb-1">
+                                <i class="fas fa-file-pdf text-red-600 mr-2"></i>
+                                <span>File: yamaha-bikes-2024.pdf</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-500 mb-1">
+                                <i class="fas fa-file-alt text-red-600 mr-2"></i>
+                                <span>Pages: 36 pages</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <i class="fas fa-weight text-red-600 mr-2"></i>
+                                <span>Size: 6.2 MB</span>
+                            </div>
+                        </div>
+                        <div class="flex space-x-3">
+                            <a href="#" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center text-center">
+                                <i class="fas fa-download mr-2"></i> Download
+                            </a>
+                            <a href="#" class="flex-1 bg-gray-800 hover:bg-gray-900 text-white font-medium py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center text-center">
+                                <i class="fas fa-eye mr-2"></i> Preview
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Brochure 3: Spare Parts -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition duration-300 transform hover:-translate-y-1">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="images/parts/toyota-oil-filter.jpg" 
+                             alt="Spare Parts Catalog" 
+                             class="w-full h-full object-cover transition duration-500 hover:scale-110">
+                        <div class="absolute top-4 left-4 bg-green-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                            Parts Catalog
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Genuine Spare Parts Catalog</h3>
+                        <p class="text-gray-600 mb-4">Complete catalog of genuine Toyota & Yamaha spare parts with part numbers and compatibility guide.</p>
+                        <div class="mb-4">
+                            <div class="flex items-center text-sm text-gray-500 mb-1">
+                                <i class="fas fa-file-pdf text-red-600 mr-2"></i>
+                                <span>File: spare-parts-catalog.pdf</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-500 mb-1">
+                                <i class="fas fa-file-alt text-red-600 mr-2"></i>
+                                <span>Pages: 120 pages</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <i class="fas fa-weight text-red-600 mr-2"></i>
+                                <span>Size: 15.7 MB</span>
+                            </div>
+                        </div>
+                        <div class="flex space-x-3">
+                            <a href="#" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center text-center">
+                                <i class="fas fa-download mr-2"></i> Download
+                            </a>
+                            <a href="#" class="flex-1 bg-gray-800 hover:bg-gray-900 text-white font-medium py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center text-center">
+                                <i class="fas fa-eye mr-2"></i> Preview
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Brochure 4: Commercial Vehicles -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition duration-300 transform hover:-translate-y-1">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="images/vehicles/hino-fc-500.jpg" 
+                             alt="Commercial Vehicles Brochure" 
+                             class="w-full h-full object-cover transition duration-500 hover:scale-110">
+                        <div class="absolute top-4 left-4 bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                            Commercial
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Commercial Vehicles Portfolio</h3>
+                        <p class="text-gray-600 mb-4">Complete range of commercial vehicles including vans, trucks, buses, and utility vehicles.</p>
+                        <div class="mb-4">
+                            <div class="flex items-center text-sm text-gray-500 mb-1">
+                                <i class="fas fa-file-pdf text-red-600 mr-2"></i>
+                                <span>File: commercial-vehicles.pdf</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-500 mb-1">
+                                <i class="fas fa-file-alt text-red-600 mr-2"></i>
+                                <span>Pages: 42 pages</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <i class="fas fa-weight text-red-600 mr-2"></i>
+                                <span>Size: 7.8 MB</span>
+                            </div>
+                        </div>
+                        <div class="flex space-x-3">
+                            <a href="#" class="flex-1 bg-purple-600 hover:bg-purple-700 text-white font-medium py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center text-center">
+                                <i class="fas fa-download mr-2"></i> Download
+                            </a>
+                            <a href="#" class="flex-1 bg-gray-800 hover:bg-gray-900 text-white font-medium py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center text-center">
+                                <i class="fas fa-eye mr-2"></i> Preview
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Brochure 5: Service Center -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition duration-300 transform hover:-translate-y-1">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="images/vehicles/service.jpg" 
+                             alt="Service Center Brochure" 
+                             class="w-full h-full object-cover transition duration-500 hover:scale-110">
+                        <div class="absolute top-4 left-4 bg-yellow-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                            Services
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Service Center Brochure</h3>
+                        <p class="text-gray-600 mb-4">Detailed information about our service center, maintenance packages, and repair services.</p>
+                        <div class="mb-4">
+                            <div class="flex items-center text-sm text-gray-500 mb-1">
+                                <i class="fas fa-file-pdf text-red-600 mr-2"></i>
+                                <span>File: service-center-guide.pdf</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-500 mb-1">
+                                <i class="fas fa-file-alt text-red-600 mr-2"></i>
+                                <span>Pages: 28 pages</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <i class="fas fa-weight text-red-600 mr-2"></i>
+                                <span>Size: 4.5 MB</span>
+                            </div>
+                        </div>
+                        <div class="flex space-x-3">
+                            <a href="#" class="flex-1 bg-yellow-600 hover:bg-yellow-700 text-white font-medium py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center text-center">
+                                <i class="fas fa-download mr-2"></i> Download
+                            </a>
+                            <a href="#" class="flex-1 bg-gray-800 hover:bg-gray-900 text-white font-medium py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center text-center">
+                                <i class="fas fa-eye mr-2"></i> Preview
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Brochure 6: Financing Options -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition duration-300 transform hover:-translate-y-1">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="images/vehicles/car-financing.jpg" 
+                             alt="Financing Options Brochure" 
+                             class="w-full h-full object-cover transition duration-500 hover:scale-110">
+                        <div class="absolute top-4 left-4 bg-indigo-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                            Financing
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Financing & Payment Plans</h3>
+                        <p class="text-gray-600 mb-4">Explore our flexible financing options, payment plans, and loan facilities for vehicle purchases.</p>
+                        <div class="mb-4">
+                            <div class="flex items-center text-sm text-gray-500 mb-1">
+                                <i class="fas fa-file-pdf text-red-600 mr-2"></i>
+                                <span>File: financing-options.pdf</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-500 mb-1">
+                                <i class="fas fa-file-alt text-red-600 mr-2"></i>
+                                <span>Pages: 32 pages</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <i class="fas fa-weight text-red-600 mr-2"></i>
+                                <span>Size: 5.1 MB</span>
+                            </div>
+                        </div>
+                        <div class="flex space-x-3">
+                            <a href="#" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center text-center">
+                                <i class="fas fa-download mr-2"></i> Download
+                            </a>
+                            <a href="#" class="flex-1 bg-gray-800 hover:bg-gray-900 text-white font-medium py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center text-center">
+                                <i class="fas fa-eye mr-2"></i> Preview
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Additional Brochure Information -->
+            <div class="mt-12 bg-gray-50 rounded-xl p-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Need Printed Brochures?</h3>
+                        <p class="text-gray-600 mb-4">
+                            Visit our showroom in Kapenguria to collect printed copies of all our brochures. Our sales representatives will be happy to provide you with physical copies and answer any questions you may have.
+                        </p>
+                        <ul class="space-y-2 text-gray-700">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
+                                <span>Printed high-quality brochures available</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
+                                <span>Take-home product catalogs</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
+                                <span>Technical specifications sheets</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
+                                <span>Price lists and financing brochures</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Request Brochures by Email</h3>
+                        <p class="text-gray-600 mb-6">
+                            Can't download? Provide your email address and we'll send all brochures directly to your inbox.
+                        </p>
+                        <form class="space-y-4">
+                            <div>
+                                <input type="email" placeholder="Your email address" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600">
+                            </div>
+                            <div class="flex space-x-4">
+                                <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-6 rounded-lg transition duration-300">
+                                    Send All Brochures
+                                </button>
+                                <button type="button" class="bg-gray-800 hover:bg-gray-900 text-white font-medium py-3 px-6 rounded-lg transition duration-300">
+                                    Request Callback
+                                </button>
+                            </div>
+                        </form>
+                        <p class="text-sm text-gray-500 mt-4">
+                            By submitting, you agree to receive product information from KAPEYAMAHA LIMITED. We respect your privacy.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Testimonials -->
     <section class="py-16 bg-white">
         <div class="container mx-auto px-4">
@@ -1072,11 +1384,11 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Testimonial 1 - FIXED PATH -->
+                <!-- Testimonial 1 -->
                 <div class="bg-white p-6 rounded-lg shadow-sm testimonial-card">
                     <div class="flex items-center mb-4">
                         <div class="w-12 h-12 rounded-full bg-gray-300 mr-4 overflow-hidden">
-                           <img src="images/vehicles/suv1.jpg" alt="Customer" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://via.placeholder.com/100/3B82F6/FFFFFF?text=NC'">
+                            <img src="images/vehicles/suv1.jpg" alt="Customer" class="w-full h-full object-cover">
                         </div>
                         <div>
                             <h4 class="font-semibold text-gray-800">NANCY C.</h4>
@@ -1094,11 +1406,11 @@
                     </p>
                 </div>
                 
-                <!-- Testimonial 2 - FIXED PATH -->
+                <!-- Testimonial 2 -->
                 <div class="bg-white p-6 rounded-lg shadow-sm testimonial-card">
                     <div class="flex items-center mb-4">
                         <div class="w-12 h-12 rounded-full bg-gray-300 mr-4 overflow-hidden">
-                            <img src="images/vehicles/suv5.jpg" alt="Customer" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://via.placeholder.com/100/10B981/FFFFFF?text=AO'">
+                            <img src="images/vehicles/suv5.jpg" alt="Customer" class="w-full h-full object-cover">
                         </div>
                         <div>
                             <h4 class="font-semibold text-gray-800">ALFRED O</h4>
@@ -1116,11 +1428,11 @@
                     </p>
                 </div>
                 
-                <!-- Testimonial 3 - FIXED PATH -->
+                <!-- Testimonial 3 -->
                 <div class="bg-white p-6 rounded-lg shadow-sm testimonial-card">
                     <div class="flex items-center mb-4">
                         <div class="w-12 h-12 rounded-full bg-gray-300 mr-4 overflow-hidden">
-                            <img src="images/vehicles/suvs3.jpg" alt="Customer" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://via.placeholder.com/100/8B5CF6/FFFFFF?text=AW'">
+                            <img src="images/vehicles/suvs3.jpg" alt="Customer" class="w-full h-full object-cover">
                         </div>
                         <div>
                             <h4 class="font-semibold text-gray-800">ALBERT W.</h4>
@@ -1266,7 +1578,7 @@
             </div>
         </div>
         
-        <!-- Map Section - FIXED -->
+        <!-- Map Section -->
         <div class="mt-12">
             <h3 class="text-xl font-semibold mb-6 text-center">Our Location - Kapenguria Sub-station</h3>
             <div class="bg-white p-4 rounded-lg shadow-lg">
@@ -1285,7 +1597,7 @@
                         </ul>
                     </div>
                     <div class="bg-gray-100 rounded-lg overflow-hidden">
-                        <!-- Map Container - FIXED -->
+                        <!-- Map Container -->
                         <div id="map-container" class="h-64 lg:h-full">
                             <iframe 
                                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.742345845139!2d35.1002773147539!3d1.2384477991361726!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x17810b2c6d0b5f7d%3A0x4c2c2b5b5b5b5b5b!2sKapenguria!5e0!3m2!1sen!2ske!4v1620000000000!5m2!1sen!2ske" 
@@ -1342,6 +1654,7 @@
                         <li><a href="#bikes" class="hover:text-red-600 transition duration-300">Yamaha Bikes</a></li>
                         <li><a href="#vehicles" class="hover:text-red-600 transition duration-300">Commercial Vehicles</a></li>
                         <li><a href="#spare-parts" class="hover:text-red-600 transition duration-300">Spare Parts</a></li>
+                        <li><a href="#brochures" class="hover:text-red-600 transition duration-300">Brochures</a></li>
                         <li><a href="#faq" class="hover:text-red-600 transition duration-300">Q&A</a></li>
                     </ul>
                 </div>
@@ -1376,15 +1689,14 @@
                 <p>&copy; <span id="current-year">2023</span> KAPEYAMAHA ENTERPRISES LIMITED. All rights reserved.</p>
                 <p class="mt-2 text-sm">Secure payments powered by PayPal and Stripe</p>
                 <div class="flex justify-center space-x-4 mt-4">
-                    <!-- FIXED PAYPAL LOGOS -->
-                    <img src="https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-100px.png" alt="PayPal" class="h-8" onerror="this.style.display='none'">
-                    <img src="https://www.paypalobjects.com/webstatic/mktg/Logo/AM_SbyPP_mc_vs_ms_ae_UK.png" alt="Accepted Cards" class="h-8" onerror="this.style.display='none'">
+                    <img src="https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-100px.png" alt="PayPal" class="h-8">
+                    <img src="https://www.paypalobjects.com/webstatic/mktg/Logo/AM_SbyPP_mc_vs_ms_ae_UK.png" alt="Accepted Cards" class="h-8">
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Scripts - FIXED -->
+    <!-- Scripts -->
     <script src="https://js.stripe.com/v3/"></script>
     <script>
         // Image Path Fix Function - This will handle broken images
@@ -1446,7 +1758,7 @@
             });
         }
 
-        // Products data (FIXED IMAGE PATHS)
+        // Products data (ORIGINAL - keeping your existing image paths)
         const yamahaBikes = [
             {
                 id: "bike-01",
@@ -1572,205 +1884,203 @@
                 specs: { engine: "2.8L Turbo Diesel", power: "204 HP", torque: "500 Nm", transmission: "6-Speed Automatic", fuel: "Diesel" }
             }
         ];
+const commercialVehicles = [
+    {
+        id: "vehicle-01",
+        name: "Toyota Hiace Van",
+        category: "vehicle",
+        price: 42000,
+        description: "Versatile passenger and cargo van with spacious interior and reliable performance.",
+        features: ["3.0L Diesel", "15-Seater", "Spacious Cabin", "Commercial Grade", "Durable Build"],
+        image: "images/vehicles/toyota-hiace.jpg",
+        specs: { engine: "3.0L Turbo Diesel", capacity: "15 Passengers", transmission: "6-Speed Manual/Automatic", fuel: "Diesel", warranty: "3 Years/100,000 km" }
+    },
+    {
+        id: "vehicle-02",
+        name: "Toyota Coaster Bus",
+        category: "vehicle",
+        price: 85000,
+        description: "Premium bus for passenger transport with comfortable seating and advanced safety features.",
+        features: ["4.2L Diesel", "30-Seater", "Air Conditioning", "Comfort Seats", "Safety Features"],
+        image: "images/vehicles/toyota-coaster.jpg",
+        specs: { engine: "4.2L Diesel", capacity: "30 Passengers", transmission: "6-Speed Automatic", fuel: "Diesel", warranty: "3 Years/150,000 km" }
+    },
+    {
+        id: "vehicle-03",
+        name: "HINO FC 500",
+        category: "vehicle",
+        price: 55000,
+        description: "Medium-duty truck for cargo transport with excellent payload capacity and reliability.",
+        features: ["4.0L Diesel", "5-Ton Capacity", "Power Steering", "Durable Chassis", "Easy Maintenance"],
+        image: "images/vehicles/hino-fc-500.jpg",
+        specs: { engine: "4.0L Diesel", capacity: "5 Tons", transmission: "5-Speed Manual", fuel: "Diesel", warranty: "2 Years/100,000 km" }
+    },
+    {
+        id: "vehicle-04",
+        name: "Toyota Land Cruiser 79",
+        category: "vehicle",
+        price: 95000,
+        description: "Heavy-duty utility vehicle built for tough conditions and off-road operations.",
+        features: ["4.5L Diesel V8", "4WD", "Utility Vehicle", "Heavy Duty", "Off-Road Capable"],
+        image: "images/vehicles/toyota-landcruiser-79.jpg",
+        specs: { engine: "4.0L Diesel", capacity: "5 Tons", transmission: "5-Speed Manual", fuel: "Diesel", warranty: "2 Years/100,000 km" }
+    },
+    {
+        id: "vehicle-05",
+        name: "Toyota Hilux Double Cab",
+        category: "vehicle",
+        price: 48000,
+        description: "Premium pickup with double cab for passenger comfort and cargo utility.",
+        features: ["2.8L Diesel", "4WD", "Double Cab", "Leather Seats", "Advanced Infotainment"],
+        image: "images/vehicles/toyota-hilux-doublecab.jpg",
+        specs: { engine: "2.8L Turbo Diesel", capacity: "5 Passengers", transmission: "6-Speed Automatic", fuel: "Diesel", warranty: "3 Years/100,000 km" }
+    },
+    {
+        id: "vehicle-06",
+        name: "Toyota Highlander",
+        category: "vehicle",
+        price: 55000,
+        description: "Compact utility vehicle perfect for luxury and cargo transport.",
+        features: ["1.5L Petrol", "Compact Size", "Fuel Efficient", "Spacious Cargo", "Easy to Drive"],
+        image: "images/vehicles/toyota-highlander.jpg",
+        specs: { engine: "2.8 L Petrol", capacity: "5 Passengers", transmission: "7-Speed Manual", fuel: "Petrol", warranty: "2 Years/150,000 km" }
+    }
+];
 
-        const commercialVehicles = [
-            {
-                id: "vehicle-01",
-                name: "Toyota Hiace Van",
-                category: "vehicle",
-                price: 42000,
-                description: "Versatile passenger and cargo van with spacious interior and reliable performance.",
-                features: ["3.0L Diesel", "15-Seater", "Spacious Cabin", "Commercial Grade", "Durable Build"],
-                image: "images/vehicles/toyota-hiace.jpg",
-                specs: { engine: "3.0L Turbo Diesel", capacity: "15 Passengers", transmission: "6-Speed Manual/Automatic", fuel: "Diesel", warranty: "3 Years/100,000 km" }
-            },
-            {
-                id: "vehicle-02",
-                name: "Toyota Coaster Bus",
-                category: "vehicle",
-                price: 85000,
-                description: "Premium bus for passenger transport with comfortable seating and advanced safety features.",
-                features: ["4.2L Diesel", "30-Seater", "Air Conditioning", "Comfort Seats", "Safety Features"],
-                image: "images/vehicles/toyota-coaster.jpg",
-                specs: { engine: "4.2L Diesel", capacity: "30 Passengers", transmission: "6-Speed Automatic", fuel: "Diesel", warranty: "3 Years/150,000 km" }
-            },
-            {
-                id: "vehicle-03",
-                name: "HINO FC 500",
-                category: "vehicle",
-                price: 55000,
-                description: "Medium-duty truck for cargo transport with excellent payload capacity and reliability.",
-                features: ["4.0L Diesel", "5-Ton Capacity", "Power Steering", "Durable Chassis", "Easy Maintenance"],
-                image: "images/vehicles/hino-fc-500.jpg",
-                specs: { engine: "4.0L Diesel", capacity: "5 Tons", transmission: "5-Speed Manual", fuel: "Diesel", warranty: "2 Years/100,000 km" }
-            },
-            {
-                id: "vehicle-04",
-                name: "Toyota Land Cruiser 79",
-                category: "vehicle",
-                price: 95000,
-                description: "Heavy-duty utility vehicle built for tough conditions and off-road operations.",
-                features: ["4.5L Diesel V8", "4WD", "Utility Vehicle", "Heavy Duty", "Off-Road Capable"],
-                image: "images/vehicles/toyota-landcruiser-79.jpg",
-                specs: { engine: "4.0L Diesel", capacity: "5 Tons", transmission: "5-Speed Manual", fuel: "Diesel", warranty: "2 Years/100,000 km" }
-            },
-            {
-                id: "vehicle-05",
-                name: "Toyota Hilux Double Cab",
-                category: "vehicle",
-                price: 48000,
-                description: "Premium pickup with double cab for passenger comfort and cargo utility.",
-                features: ["2.8L Diesel", "4WD", "Double Cab", "Leather Seats", "Advanced Infotainment"],
-                image: "images/vehicles/toyota-hilux-doublecab.jpg",
-                specs: { engine: "2.8L Turbo Diesel", capacity: "5 Passengers", transmission: "6-Speed Automatic", fuel: "Diesel", warranty: "3 Years/100,000 km" }
-            },
-            {
-                id: "vehicle-06",
-                name: "Toyota Highlander",
-                category: "vehicle",
-                price: 55000,
-                description: "Compact utility vehicle perfect for luxury and cargo transport.",
-                features: ["1.5L Petrol", "Compact Size", "Fuel Efficient", "Spacious Cargo", "Easy to Drive"],
-                image: "images/vehicles/toyota-highlander.jpg",
-                specs: { engine: "2.8 L Petrol", capacity: "5 Passengers", transmission: "7-Speed Manual", fuel: "Petrol", warranty: "2 Years/150,000 km" }
-            }
-        ];
-
-        const spareParts = [
-            {
-                id: "part-engine-01",
-                name: "Toyota Engine Oil Filter",
-                category: "engine",
-                subcategory: "filter",
-                price: 25,
-                description: "Original Toyota oil filter for optimal engine protection and performance.",
-                features: ["Genuine Toyota", "High Filtration", "Easy Installation", "Long Life"],
-                image: "images/parts/toyota-oil-filter.jpg",
-                compatibility: ["All Toyota Models"]
-            },
-            {
-                id: "part-engine-02",
-                name: "Yamaha Air Filter",
-                category: "engine",
-                subcategory: "filter",
-                price: 35,
-                description: "Genuine Yamaha air filter for clean air intake and engine efficiency.",
-                features: ["Genuine Yamaha", "High Airflow", "Washable", "Performance"],
-                image: "images/parts/yamaha-air-filter.jpg",
-                compatibility: ["All Yamaha Motorcycles"]
-            },
-            {
-                id: "part-engine-03",
-                name: "Toyota Spark Plugs",
-                category: "engine",
-                subcategory: "ignition",
-                price: 65,
-                description: "Set of genuine Toyota spark plugs for optimal ignition performance.",
-                features: ["Iridium Tips", "Better Combustion", "Fuel Efficient", "Long Lasting"],
-                image: "images/parts/toyota-spark-plugs.jpg",
-                compatibility: ["Toyota 4-Cylinder Engines"]
-            },
-            {
-                id: "part-engine-04",
-                name: "Toyota Timing Belt Kit",
-                category: "engine",
-                subcategory: "belt",
-                price: 180,
-                description: "Complete timing belt kit with tensioner and idler pulleys.",
-                features: ["Complete Kit", "OE Quality", "Includes Tensioner", "Reliable"],
-                image: "images/parts/toyota-timing-belt.jpg",
-                compatibility: ["Toyota Camry, Corolla, RAV4"]
-            },
-            {
-                id: "part-brake-01",
-                name: "Toyota Brake Pads (Front)",
-                category: "brake",
-                subcategory: "pads",
-                price: 75,
-                description: "Original Toyota brake pads for reliable and consistent braking performance.",
-                features: ["OE Quality", "Low Noise", "Low Dust", "Long Life"],
-                image: "images/parts/toyota-brake-pads.jpg",
-                compatibility: ["Toyota Sedans and SUVs"]
-            },
-            {
-                id: "part-brake-02",
-                name: "Yamaha Brake Pads",
-                category: "brake",
-                subcategory: "pads",
-                price: 45,
-                description: "Original Yamaha brake pads for superior stopping power and durability.",
-                features: ["Genuine Yamaha", "High Friction", "Quick Response", "Durable"],
-                image: "images/parts/yamaha-brake-pads.jpg",
-                compatibility: ["Yamaha Sport Bikes"]
-            },
-            {
-                id: "part-electrical-01",
-                name: "Toyota Battery",
-                category: "electrical",
-                subcategory: "battery",
-                price: 150,
-                description: "Maintenance-free battery designed specifically for Toyota vehicles.",
-                features: ["Maintenance Free", "High CCA", "Long Life", "Warranty"],
-                image: "images/parts/toyota-battery.jpg",
-                compatibility: ["All Toyota Models"]
-            },
-            {
-                id: "part-electrical-02",
-                name: "Yamaha Battery",
-                category: "electrical",
-                subcategory: "battery",
-                price: 85,
-                description: "Maintenance-free battery designed specifically for Yamaha motorcycles.",
-                features: ["Maintenance Free", "High Performance", "Compact", "Reliable"],
-                image: "images/parts/yamaha-battery.jpg",
-                compatibility: ["Yamaha Motorcycles"]
-            },
-            {
-                id: "part-suspension-01",
-                name: "Toyota Shock Absorbers (Front)",
-                category: "suspension",
-                subcategory: "shocks",
-                price: 120,
-                description: "Original Toyota shock absorbers for comfortable ride and handling.",
-                features: ["Gas Charged", "OE Quality", "Comfort Ride", "Durable"],
-                image: "images/parts/toyota-shock-absorbers.jpg",
-                compatibility: ["Toyota Corolla, Camry"]
-            },
-            {
-                id: "part-body-01",
-                name: "Toyota Headlight Assembly",
-                category: "body",
-                subcategory: "lights",
-                price: 280,
-                description: "Original Toyota headlight assembly with bulbs and housing.",
-                features: ["Complete Assembly", "LED Available", "OE Quality", "Easy Installation"],
-                image: "images/parts/toyota-headlight-assembly.jpg",
-                compatibility: ["Toyota Specific Models"]
-            },
-            {
-                id: "part-fluid-01",
-                name: "Toyota Genuine Engine Oil 5W-30",
-                category: "fluid",
-                subcategory: "oil",
-                price: 55,
-                description: "Premium Toyota engine oil for maximum engine protection.",
-                features: ["Synthetic Blend", "5W-30", "4 Liters", "API Certified"],
-                image: "images/parts/toyota-engine-oil.jpg",
-                compatibility: ["All Toyota Models"]
-            },
-            {
-                id: "part-accessory-01",
-                name: "Yamaha Chain & Sprocket Kit",
-                category: "accessory",
-                subcategory: "drive",
-                price: 120,
-                description: "Complete chain and sprocket kit for smooth power transmission.",
-                features: ["Complete Kit", "O-Ring Chain", "Steel Sprockets", "Easy Installation"],
-                image: "images/parts/yamaha-chain-sprocket-kit.jpg",
-                compatibility: ["Yamaha 400-750cc Models"]
-            }
-        ];
-
+const spareParts = [
+    {
+        id: "part-engine-01",
+        name: "Toyota Engine Oil Filter",
+        category: "engine",
+        subcategory: "filter",
+        price: 25,
+        description: "Original Toyota oil filter for optimal engine protection and performance.",
+        features: ["Genuine Toyota", "High Filtration", "Easy Installation", "Long Life"],
+        image: "images/parts/toyota-oil-filter.jpg",
+        compatibility: ["All Toyota Models"]
+    },
+    {
+        id: "part-engine-02",
+        name: "Yamaha Air Filter",
+        category: "engine",
+        subcategory: "filter",
+        price: 35,
+        description: "Genuine Yamaha air filter for clean air intake and engine efficiency.",
+        features: ["Genuine Yamaha", "High Airflow", "Washable", "Performance"],
+        image: "images/parts/yamaha-air-filter.jpg",
+        compatibility: ["All Yamaha Motorcycles"]
+    },
+    {
+        id: "part-engine-03",
+        name: "Toyota Spark Plugs",
+        category: "engine",
+        subcategory: "ignition",
+        price: 65,
+        description: "Set of genuine Toyota spark plugs for optimal ignition performance.",
+        features: ["Iridium Tips", "Better Combustion", "Fuel Efficient", "Long Lasting"],
+        image: "images/parts/toyota-spark-plugs.jpg",
+        compatibility: ["Toyota 4-Cylinder Engines"]
+    },
+    {
+        id: "part-engine-04",
+        name: "Toyota Timing Belt Kit",
+        category: "engine",
+        subcategory: "belt",
+        price: 180,
+        description: "Complete timing belt kit with tensioner and idler pulleys.",
+        features: ["Complete Kit", "OE Quality", "Includes Tensioner", "Reliable"],
+        image: "images/parts/toyota-timing-belt.jpg",
+        compatibility: ["Toyota Camry, Corolla, RAV4"]
+    },
+    {
+        id: "part-brake-01",
+        name: "Toyota Brake Pads (Front)",
+        category: "brake",
+        subcategory: "pads",
+        price: 75,
+        description: "Original Toyota brake pads for reliable and consistent braking performance.",
+        features: ["OE Quality", "Low Noise", "Low Dust", "Long Life"],
+        image: "images/parts/toyota-brake-pads.jpg",
+        compatibility: ["Toyota Sedans and SUVs"]
+    },
+    {
+        id: "part-brake-02",
+        name: "Yamaha Brake Pads",
+        category: "brake",
+        subcategory: "pads",
+        price: 45,
+        description: "Original Yamaha brake pads for superior stopping power and durability.",
+        features: ["Genuine Yamaha", "High Friction", "Quick Response", "Durable"],
+        image: "images/parts/yamaha-brake-pads.jpg",
+        compatibility: ["Yamaha Sport Bikes"]
+    },
+    {
+        id: "part-electrical-01",
+        name: "Toyota Battery",
+        category: "electrical",
+        subcategory: "battery",
+        price: 150,
+        description: "Maintenance-free battery designed specifically for Toyota vehicles.",
+        features: ["Maintenance Free", "High CCA", "Long Life", "Warranty"],
+        image: "images/parts/toyota-battery.jpg",
+        compatibility: ["All Toyota Models"]
+    },
+    {
+        id: "part-electrical-02",
+        name: "Yamaha Battery",
+        category: "electrical",
+        subcategory: "battery",
+        price: 85,
+        description: "Maintenance-free battery designed specifically for Yamaha motorcycles.",
+        features: ["Maintenance Free", "High Performance", "Compact", "Reliable"],
+        image: "images/parts/yamaha-battery.jpg",
+        compatibility: ["Yamaha Motorcycles"]
+    },
+    {
+        id: "part-suspension-01",
+        name: "Toyota Shock Absorbers (Front)",
+        category: "suspension",
+        subcategory: "shocks",
+        price: 120,
+        description: "Original Toyota shock absorbers for comfortable ride and handling.",
+        features: ["Gas Charged", "OE Quality", "Comfort Ride", "Durable"],
+        image: "images/parts/toyota-shock-absorbers.jpg",
+        compatibility: ["Toyota Corolla, Camry"]
+    },
+    {
+        id: "part-body-01",
+        name: "Toyota Headlight Assembly",
+        category: "body",
+        subcategory: "lights",
+        price: 280,
+        description: "Original Toyota headlight assembly with bulbs and housing.",
+        features: ["Complete Assembly", "LED Available", "OE Quality", "Easy Installation"],
+        image: "images/parts/toyota-headlight-assembly.jpg",
+        compatibility: ["Toyota Specific Models"]
+    },
+    {
+        id: "part-fluid-01",
+        name: "Toyota Genuine Engine Oil 5W-30",
+        category: "fluid",
+        subcategory: "oil",
+        price: 55,
+        description: "Premium Toyota engine oil for maximum engine protection.",
+        features: ["Synthetic Blend", "5W-30", "4 Liters", "API Certified"],
+        image: "images/parts/toyota-engine-oil.jpg",
+        compatibility: ["All Toyota Models"]
+    },
+    {
+        id: "part-accessory-01",
+        name: "Yamaha Chain & Sprocket Kit",
+        category: "accessory",
+        subcategory: "drive",
+        price: 120,
+        description: "Complete chain and sprocket kit for smooth power transmission.",
+        features: ["Complete Kit", "O-Ring Chain", "Steel Sprockets", "Easy Installation"],
+        image: "images/parts/yamaha-chain-sprocket-kit.jpg",
+        compatibility: ["Yamaha 400-750cc Models"]
+    }
+];
         // Shopping Cart
         let cart = JSON.parse(localStorage.getItem('kapeyamaha-cart')) || [];
 
@@ -2381,41 +2691,7 @@
             // Set current year
             document.getElementById('current-year').textContent = new Date().getFullYear();
         });
-
-
-        // ========== DEBUG IMAGE LOADING ==========
-        function checkAllImages() {
-            console.log("=== IMAGE DEBUGGING ===");
-            
-            // Check hero images
-            const heroImages = [
-                'images/hero/Toyota-fortuner.jpg',
-                'images/hero/toyota-RSA.jpg',
-                'images/hero/TOYOTA-LANDCRUISER-GDJ.jpg',
-                'images/hero/toyota-landcruiser-prado.jpg'
-            ];
-            
-            heroImages.forEach(src => {
-                const img = new Image();
-                img.onload = () => console.log(`✅ Hero Image OK: ${src}`);
-                img.onerror = () => console.log(`❌ Hero Image FAILED: ${src}`);
-                img.src = src;
-            });
-            
-            // Check product images
-            const allProducts = [...yamahaBikes, ...toyotaCars, ...commercialVehicles, ...spareParts];
-            allProducts.forEach(product => {
-                const img = new Image();
-                img.onload = () => console.log(`✅ Product Image OK: ${product.name}`);
-                img.onerror = () => console.log(`❌ Product Image FAILED: ${product.name} - ${product.image}`);
-                img.src = product.image;
-            });
-        }
-
-        // Run after page loads
-        setTimeout(checkAllImages, 2000);
     </script>
-    
     
     <!-- Payment Functions -->
     <script>
