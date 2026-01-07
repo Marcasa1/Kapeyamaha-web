@@ -1,4 +1,9 @@
 {
-  "name": "kapeyamaha",
-  "version": "1.0.0"
+  "name": "kapeyamaha-website",
+  "version": "1.0.0",
+  "description": "KAPEYAMAHA LIMITED Automotive Website",
+  "main": "index.html",
+  "scripts": {
+    "start": "echo 'Static site deployed'"
+  }
 }
