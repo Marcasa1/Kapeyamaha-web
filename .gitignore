@@ -28,3 +28,6 @@ kapeyamaha-backend/node_modules/
 test-*.html
 fix-*.sh
 *.backup
+
+.vercel
+.env*.local

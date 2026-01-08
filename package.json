@@ -1,8 +1,25 @@
 {
-  "name": "kapeyamaha-website",
+  "name": "kapeyamaha-web",
   "version": "1.0.0",
+  "description": "Kape Yamaha Toyota & Yamaha Vehicles Website",
+  "main": "index.html",
   "scripts": {
-    "build": "echo 'No build required'",
-    "start": "echo 'Static site'"
+    "start": "serve .",
+    "build": "echo 'Building static site...'",
+    "dev": "serve ."
+  },
+  "keywords": [
+    "toyota",
+    "yamaha",
+    "vehicles",
+    "kenya"
+  ],
+  "author": "Kape Yamaha Enterprises",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "serve": "^14.2.5"
   }
 }
