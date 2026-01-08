@@ -1,14 +1,8 @@
 {
   "name": "kapeyamaha-website",
   "version": "1.0.0",
-  "description": "KAPEYAMAHA LIMITED Automotive Website",
-  "main": "index.html",
   "scripts": {
-    "dev": "serve .",
-    "build": "echo 'Static site build complete'",
-    "start": "serve ."
-  },
-  "devDependencies": {
-    "serve": "^14.0.0"
+    "build": "echo 'No build required'",
+    "start": "echo 'Static site'"
   }
 }
